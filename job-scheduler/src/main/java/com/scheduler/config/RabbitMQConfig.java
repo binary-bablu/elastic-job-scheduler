@@ -1,4 +1,4 @@
-package com.scheduler.helios.config;
+package com.scheduler.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;

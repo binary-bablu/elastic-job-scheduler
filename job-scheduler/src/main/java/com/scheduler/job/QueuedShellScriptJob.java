@@ -1,4 +1,4 @@
-package com.scheduler.helios.job;
+package com.scheduler.job;
 
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.scheduler.helios.dto.JobExecutionRequest;
-import com.scheduler.helios.entity.JobExecInfo;
-import com.scheduler.helios.repository.JobExecInfoRepository;
-import com.scheduler.helios.service.JobQueueService;
+import com.scheduler.dto.JobExecutionRequest;
+import com.scheduler.entity.JobExecInfo;
+import com.scheduler.repository.JobExecInfoRepository;
+import com.scheduler.service.JobQueueService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

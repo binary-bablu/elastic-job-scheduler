@@ -1,4 +1,4 @@
-package com.scheduler.helios.service;
+package com.scheduler.service;
 
 
 import java.util.Optional;
@@ -9,10 +9,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.scheduler.helios.config.RabbitMQConfig;
-import com.scheduler.helios.dto.JobExecutionRequest;
-import com.scheduler.helios.entity.JobExecInfo;
-import com.scheduler.helios.repository.JobExecInfoRepository;
+import com.scheduler.config.RabbitMQConfig;
+import com.scheduler.dto.JobExecutionRequest;
+import com.scheduler.entity.JobExecInfo;
+import com.scheduler.repository.JobExecInfoRepository;
 
 @Service
 public class JobQueueService {

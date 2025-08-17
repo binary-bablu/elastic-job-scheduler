@@ -1,4 +1,4 @@
-package com.scheduler.helios.dto;
+package com.scheduler.dto;
 
 import java.util.Map;
 

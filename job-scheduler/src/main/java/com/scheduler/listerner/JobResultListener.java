@@ -1,4 +1,4 @@
-package com.scheduler.helios.listerner;
+package com.scheduler.listerner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,9 +6,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.scheduler.helios.config.RabbitMQConfig;
-import com.scheduler.helios.dto.JobExecutionResult;
-import com.scheduler.helios.service.JobQueueService;
+import com.scheduler.config.RabbitMQConfig;
+import com.scheduler.dto.JobExecutionResult;
+import com.scheduler.service.JobQueueService;
 
 @Component
 public class JobResultListener {

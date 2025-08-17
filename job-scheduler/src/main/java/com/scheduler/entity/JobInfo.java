@@ -1,4 +1,4 @@
-package com.scheduler.helios.entity;
+package com.scheduler.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
