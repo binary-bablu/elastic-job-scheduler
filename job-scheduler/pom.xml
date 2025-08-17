@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.scheduler.helios</groupId>
-	<artifactId>helios-job-scheduler</artifactId>
+	<artifactId>helios-job-scheduler-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>j-helios-scheduler</name>
 	<packaging>jar</packaging>
