@@ -1,4 +1,4 @@
-package com.scheduler.helios.manager.exception;
+package com.scheduler.manager.exception;
 
 import org.quartz.SchedulerException;
 import org.springframework.http.HttpStatus;

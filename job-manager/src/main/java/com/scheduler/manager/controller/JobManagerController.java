@@ -1,4 +1,4 @@
-package com.scheduler.helios.manager.controller;
+package com.scheduler.manager.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scheduler.helios.manager.dto.JobRequest;
-import com.scheduler.helios.manager.dto.JobResponse;
-import com.scheduler.helios.manager.service.JobSchedulerService;
+import com.scheduler.manager.dto.JobRequest;
+import com.scheduler.manager.dto.JobResponse;
+import com.scheduler.manager.service.JobSchedulerService;
 
 import jakarta.validation.Valid;
 

@@ -1,4 +1,4 @@
-package com.scheduler.helios.manager.service;
+package com.scheduler.manager.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -24,11 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.scheduler.helios.manager.dto.JobRequest;
-import com.scheduler.helios.manager.dto.JobResponse;
-import com.scheduler.helios.manager.entity.JobInfo;
-import com.scheduler.helios.manager.job.QueuedShellScriptJob;
-import com.scheduler.helios.manager.repository.JobInfoRepository;
+import com.scheduler.manager.dto.JobRequest;
+import com.scheduler.manager.dto.JobResponse;
+import com.scheduler.manager.entity.JobInfo;
+import com.scheduler.manager.job.QueuedShellScriptJob;
+import com.scheduler.manager.repository.JobInfoRepository;
 
 @Service
 public class JobSchedulerService {

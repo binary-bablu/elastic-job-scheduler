@@ -1,4 +1,4 @@
-package com.scheduler.helios.manager.job;
+package com.scheduler.manager.job;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;

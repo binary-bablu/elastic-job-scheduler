@@ -1,4 +1,4 @@
-package com.scheduler.helios.manager.entity;
+package com.scheduler.manager.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

@@ -1,13 +1,13 @@
-package com.scheduler.helios.manager;
+package com.scheduler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HeliosSchedulerManagerApplication {
+public class JHeliosSchedulerManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HeliosSchedulerManagerApplication.class, args);
+		SpringApplication.run(JHeliosSchedulerManagerApplication.class, args);
 	}
 
 }
