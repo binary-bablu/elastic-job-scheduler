@@ -34,14 +34,6 @@ spring:
     publisher-confirm-type: correlated
     publisher-returns: true
     
-  # Redis Configuration
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:}
-      timeout: 2000ms
-      
   quartz:
     job-store-type: jdbc
     jdbc:
