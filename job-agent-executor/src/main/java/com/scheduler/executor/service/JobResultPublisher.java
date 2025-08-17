@@ -1,4 +1,4 @@
-package com.helios.executor.service;
+package com.scheduler.executor.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.helios.executor.config.RabbitMQConfig;
-import com.helios.executor.dto.JobExecutionResult;
+import com.scheduler.executor.config.RabbitMQConfig;
+import com.scheduler.executor.dto.JobExecutionResult;
 
 @Service
 public class JobResultPublisher {

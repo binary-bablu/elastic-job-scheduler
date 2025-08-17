@@ -1,4 +1,4 @@
-package com.helios.executor.service;
+package com.scheduler.executor.service;
 
 import java.time.LocalDateTime;
 
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.helios.executor.entity.JobExecHeartBeatInfoEntity;
-import com.helios.executor.repository.JobExecHeartBeatInfoRepository;
+import com.scheduler.executor.entity.JobExecHeartBeatInfoEntity;
+import com.scheduler.executor.repository.JobExecHeartBeatInfoRepository;
 
 import jakarta.annotation.PostConstruct;
 

@@ -1,4 +1,4 @@
-package com.helios.executor;
+package com.scheduler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

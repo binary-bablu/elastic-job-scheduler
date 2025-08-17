@@ -1,4 +1,4 @@
-package com.helios.executor.dto;
+package com.scheduler.executor.dto;
 
 public class JobExecHeartBeatDto {
 	

@@ -1,4 +1,4 @@
-package com.helios.executor.service;
+package com.scheduler.executor.service;
 
 
 import java.io.BufferedReader;
@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.helios.executor.dto.JobExecutionRequest;
-import com.helios.executor.dto.JobExecutionResult;
+import com.scheduler.executor.dto.JobExecutionRequest;
+import com.scheduler.executor.dto.JobExecutionResult;
 
 @Service
 public class JobExecutorService {

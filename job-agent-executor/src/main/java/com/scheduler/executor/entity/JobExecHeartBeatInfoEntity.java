@@ -1,4 +1,4 @@
-package com.helios.executor.entity;
+package com.scheduler.executor.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

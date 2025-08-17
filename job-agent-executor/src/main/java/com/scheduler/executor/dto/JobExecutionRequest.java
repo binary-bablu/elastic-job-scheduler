@@ -1,4 +1,4 @@
-package com.helios.executor.dto;
+package com.scheduler.executor.dto;
 
 import java.time.LocalDateTime;
 import java.util.Map;
