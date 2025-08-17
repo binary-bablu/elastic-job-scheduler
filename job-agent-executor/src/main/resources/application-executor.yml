@@ -1,0 +1,74 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: job-executor-service
+  profiles:
+    active: executor
+    
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: postgres
+    password: 
+    driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  h2:
+   console:
+     enabled: true
+
+  # RabbitMQ Configuration
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:15672}
+    username: ${RABBITMQ_USER:admin}
+    password: ${RABBITMQ_PASS:admin}
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: DistributedJobScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: false
+            clusterCheckinInterval: 10000
+          threadPool:
+            threadCount: 50  # Reduced since we're just triggering, not executing
+            
+logging:
+  level:
+     com.scheduler: DEBUG
+     org.springframework.amqp: INFO
+
+management:
+ tracing:
+   sampling:
+     probability: 0.0
+ zipkin:
+   enabled: false
