@@ -34,33 +34,7 @@ spring:
     publisher-confirm-type: correlated
     publisher-returns: true
     
-  quartz:
-    job-store-type: jdbc
-    jdbc:
-      initialize-schema: always
-    properties:
-      org:
-        quartz:
-          scheduler:
-            instanceName: DistributedJobScheduler
-            instanceId: AUTO
-          jobStore:
-            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-            tablePrefix: QRTZ_
-            isClustered: false
-            clusterCheckinInterval: 10000
-          threadPool:
-            threadCount: 50  # Reduced since we're just triggering, not executing
-            
 logging:
   level:
      com.scheduler: DEBUG
      org.springframework.amqp: INFO
-
-management:
- tracing:
-   sampling:
-     probability: 0.0
- zipkin:
-   enabled: false
