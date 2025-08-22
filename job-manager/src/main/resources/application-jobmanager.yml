@@ -51,7 +51,7 @@ spring:
       org:
         quartz:
           scheduler:
-            instanceName: DistributedJobScheduler
+            instanceName: DistributedJobSchedulerManager
             instanceId: AUTO
           jobStore:
             class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
