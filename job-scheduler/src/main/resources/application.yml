@@ -4,14 +4,12 @@ server:
 spring:
   application:
     name: job-scheduler-service
-  profiles:
-    active: scheduler
     
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: 
-    driver-class-name: org.h2.Driver
+    password: ""
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 20
       connection-timeout: 30000
@@ -21,39 +19,57 @@ spring:
       ddl-auto: update
     show-sql: true
 
-  h2:
-   console:
-     enabled: true
-
   # RabbitMQ Configuration
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
-    port: ${RABBITMQ_PORT:15672}
-    username: ${RABBITMQ_USER:admin}
-    password: ${RABBITMQ_PASS:admin}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
     publisher-confirm-type: correlated
     publisher-returns: true
-    
+      
   quartz:
+    #auto-startup: false
     job-store-type: jdbc
     jdbc:
-      initialize-schema: always
+      initialize-schema: never
     properties:
       org:
         quartz:
           scheduler:
-            instanceName: DistributedJobScheduler
+            instanceName: j-helios-scheduler
             instanceId: AUTO
           jobStore:
-            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            dataSource: quartzDataSource
             tablePrefix: QRTZ_
             isClustered: true
             clusterCheckinInterval: 10000
+          dataSource:
+            quartzDataSource:
+              provider: hikaricp
+              driver: org.postgresql.Driver
+              URL: jdbc:postgresql://localhost:5432/postgres
+              user: postgres
+              password: ""
           threadPool:
-            threadCount: 50  # Reduced since we're just triggering, not executing
+            threadCount: 10  # Reduced since we're just triggering, not executing
+         
             
 logging:
   level:
      com.scheduler: DEBUG
      org.springframework.amqp: INFO
+     org.quartz: DEBUG
+     org.quartz.core: DEBUG
+     org.quartz.impl.jdbcjobstore: DEBUG
+     org.quartz.impl.StdSchedulerFactory: DEBUG
+     org.springframework.scheduling.quartz: INFO
+     org.springframework.jdbc.core: DEBUG
+     org.springframework.jdbc.datasource: DEBUG
+     #com.zaxxer.hikari: DEBUG
+
+
+
+
