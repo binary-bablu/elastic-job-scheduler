@@ -4,14 +4,12 @@ server:
 spring:
   application:
     name: job-executor-service
-  profiles:
-    active: executor
     
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: 
-    driver-class-name: org.h2.Driver
+    password: ""
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 20
       connection-timeout: 30000
@@ -21,16 +19,12 @@ spring:
       ddl-auto: update
     show-sql: true
 
-  h2:
-   console:
-     enabled: true
-
   # RabbitMQ Configuration
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
-    port: ${RABBITMQ_PORT:15672}
-    username: ${RABBITMQ_USER:admin}
-    password: ${RABBITMQ_PASS:admin}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
     publisher-confirm-type: correlated
     publisher-returns: true
     
@@ -38,3 +32,5 @@ logging:
   level:
      com.scheduler: DEBUG
      org.springframework.amqp: INFO
+     org.springframework.jdbc.core: DEBUG
+     org.springframework.jdbc.datasource: DEBUG
