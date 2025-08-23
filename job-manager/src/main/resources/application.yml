@@ -1,0 +1,75 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: job-scheduler-manager-service
+    
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: ""
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      connection-timeout: 30000
+      
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  # RabbitMQ Configuration
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+    publisher-confirm-type: correlated
+    publisher-returns: true
+      
+  quartz:
+    auto-startup: false
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: j-helios-scheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            dataSource: quartzDataSource
+            tablePrefix: QRTZ_
+            isClustered: false
+            clusterCheckinInterval: 10000
+          dataSource:
+            quartzDataSource:
+              provider: hikaricp
+              driver: org.postgresql.Driver
+              URL: jdbc:postgresql://localhost:5432/postgres
+              user: postgres
+              password: ""
+          threadPool:
+            threadCount: 10  # Reduced since we're just saving
+         
+            
+logging:
+  level:
+     com.scheduler: DEBUG
+     org.springframework.amqp: INFO
+     org.quartz: DEBUG
+     org.quartz.core: DEBUG
+     org.quartz.impl.jdbcjobstore: DEBUG
+     org.quartz.impl.StdSchedulerFactory: DEBUG
+     org.springframework.scheduling.quartz: INFO
+     org.springframework.jdbc.core: DEBUG
+     org.springframework.jdbc.datasource: DEBUG
+     #com.zaxxer.hikari: DEBUG
+
+
+
+

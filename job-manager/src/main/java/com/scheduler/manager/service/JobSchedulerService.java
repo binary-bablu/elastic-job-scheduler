@@ -1,11 +1,14 @@
 package com.scheduler.manager.service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -24,10 +27,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.scheduler.helios.job.QueuedShellScriptJob;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
 import com.scheduler.manager.entity.JobInfo;
-import com.scheduler.manager.job.QueuedShellScriptJob;
 import com.scheduler.manager.repository.JobInfoRepository;
 
 @Service
@@ -203,15 +206,32 @@ public class JobSchedulerService {
                  .setJobData(jobDataMap)
                  .storeDurably(true)
                  .build();
-
+                 
          CronTrigger trigger = TriggerBuilder.newTrigger()
-                 .withIdentity(jobInfo.getJobName() + "_trigger", jobInfo.getJobGroup())
-                 .withSchedule(CronScheduleBuilder.cronSchedule(jobInfo.getCronExpression()))
-                 .build();
+        		    .withIdentity(jobInfo.getJobName() + "_trigger", jobInfo.getJobGroup())
+        		    .withSchedule(
+        		        CronScheduleBuilder.cronSchedule(jobInfo.getCronExpression())
+        		            .inTimeZone(TimeZone.getDefault())  // Use system default time zone
+        		    )
+        		    .build();        
+         try {
+        	 scheduler.scheduleJob(jobDetail, trigger);
+             jobInfo.setCronExpression(trigger.getCronExpression());
+             
+             // Print initial fire time
+             Date nextFireTime = trigger.getNextFireTime();
+             System.out.println("Next Fire Time (raw): " + nextFireTime);
+             System.out.println("Next Fire Time (local): " +
+                     Instant.ofEpochMilli(nextFireTime.getTime())
+                             .atZone(ZoneId.systemDefault()));
 
-         scheduler.scheduleJob(jobDetail, trigger);
-         jobInfo.setCronExpression(trigger.getCronExpression());
-         logger.info("Scheduled job: {}.{}", jobInfo.getJobGroup(), jobInfo.getJobName());
+             
+             logger.info("Scheduled job: {}.{}", jobInfo.getJobGroup(), jobInfo.getJobName());
+        	 
+         }catch(Exception exp) {
+        	 exp.printStackTrace(); 
+        	 logger.error(" Error in persisting job info "+exp.getMessage());
+        }
     }
 
     private JobResponse convertToResponse(JobInfo jobInfo) throws SchedulerException {

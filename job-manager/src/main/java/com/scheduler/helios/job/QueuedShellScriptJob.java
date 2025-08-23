@@ -1,4 +1,4 @@
-package com.scheduler.manager.job;
+package com.scheduler.helios.job;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -12,7 +12,7 @@ public class QueuedShellScriptJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-    	
+    	System.out.print("hello world *******************");
    
     }
    
