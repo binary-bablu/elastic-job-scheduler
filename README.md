@@ -59,7 +59,34 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 - Built-in retry mechanisms with exponential backoff
 
 ### ✅ **Monitoring & Observability**
-- 💡More to come, ideas are brewing ☕ stay tuned ...
+- 💡More to come, ideas are brewing ☕ stay tuned ..  
+
+## 📋 Prerequisites for running  
+a) Have a PostgreSQL Database Instance configured  
+b) Have a RabbitMQ installation done  
+c) Note :- The current yaml files assume local installation of PostgreSQL database and RabbitMQ (with default creds and setup)  
+d) Run Quartz table.sql script from Quartz github for postgresql (upto you if you want different schema or in your app schema)
+
+## 🏃 How to Run
+a) Have the repo git cloned or forked for your need(s)  
+b) Import the repo in your favourite editor (typically Eclipse or IntelliJ)  
+c) Run the job-manager module  
+Sample Job Creation Request :-  
+
+curl -X POST http://localhost:8080/api/jobs \
+-H "Content-Type: application/json" \
+-d '{
+    "jobName": "daily-backup-1",
+    "jobGroup": "maintenance", 
+    "cronExpression": "0/30 * * * * ?",
+    "scriptPath": "/Users/mylaptop/test.sh",
+    "parameters": {"database": "prod"}
+}'  
+d) Agent could be run from command line like below :-  
+*mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dexecutor.agent.id=123"*    
+
+Multiple such agents can be run with different agent id's  
+e) Similar to above multiple job-scheduler's can be run on different port's
 
 ### ✍️ Authors
 Engineer , Management Lead, Works for a bank - 
