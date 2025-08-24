@@ -49,9 +49,9 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 
 | Scenario | Capacity | Configuration |
 | :---         |     :---:      |          ---: |
-| Small Scale   | 1,000 jobs     | 1 scheduler + 5 agents   |
-| Medium Scale     | 10,000 jobs       | 2 schedulers + 20 agents     |
-| Large Scale      | 100,000 jobs       | 3 schedulers + 100 agents     |
+| Small Scale   | 500+ jobs     | 1 scheduler + 5 agents   |
+| Medium Scale     | 5,000+ jobs       | 2 schedulers + 20 agents     |
+| Large Scale      | 50,000+ jobs       | 3 schedulers + 100 agents     |
 
 ### ✅ **Fault Tolerance**
 - Jobs survive agent failures (requeued automatically)
