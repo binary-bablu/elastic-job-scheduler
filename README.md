@@ -2,13 +2,13 @@
 An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintainable.
 
 ## ℹ️ Overview
-A light weight Job scheduler which can scale horizontally. Architecture follows separation of concerns :- scheduling concerns , execution concerns and management concerns. Incorporates queue based distributed pattern which can scale to thousands of jobs, based on open source tech. Follows an approach where execution agents can be deployed on machines/containers where actual execution should happen. No requirement for lot of infrastructure elements. 
+A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
 ## 🌟 Highlights
 - Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
 - Follows separation of concerns architectural pattern, SOA, queue based
 - Can be hosted on Cloud , on-prem, scales horizontally
 - Better alternative for large clunky open source , cost heavy commercial ones
-- API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it running
+- API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
 
 ## 🏗️ Architecture Diagram
    <img width="718" height="457" alt="image" src="https://github.com/user-attachments/assets/99a0aefd-394a-4280-8ca8-efefd176d347" />
@@ -24,19 +24,18 @@ A light weight Job scheduler which can scale horizontally. Architecture follows 
 - Handles Quartz based triggers.
 - Publishes job execution requests to queue when triggered
 - Processes execution results from agents
-### 3. 🧩 **Executor Agents** (Port 8081+)
-- Consume job execution requests from queue
+### 3. 🧩 **Executor Agent** (Port 8081+)
+- Consumes job execution requests from queue
 - Execute shell scripts with parameters
 - Publish results back to scheduler
-- Can run on different machines
-- Auto-scaling friendly
-### 4. 🧩 **Message Queues** (RabbitMQ)
+- Can run on different machines and Auto-scaling friendly
+### 4. 🧩 **Message Queue** (RabbitMQ)
 - **Execution Queue**: Job requests from scheduler to agents
 - **Result Queue**: Execution results from agents to scheduler
 - **Retry Queue**: Failed jobs for retry with delay
 - **DLQ**: Dead letter queue for permanently failed jobs
 ### 5. 🧩 **Storage**
-- **PostgreSQL**: Quartz job metadata , Job definition, Job Execution Information with agent heartbeats
+- **PostgreSQL**: Quartz job metadata , Job definitions, Job Execution Information with agent heartbeats
 
 ## Benefits of This Architecture
 
