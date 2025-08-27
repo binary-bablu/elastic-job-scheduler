@@ -11,7 +11,8 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 - API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
 
 ## 🏗️ Architecture Diagram
-   <img width="718" height="457" alt="image" src="https://github.com/user-attachments/assets/99a0aefd-394a-4280-8ca8-efefd176d347" />
+   <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
+
    
 
 ## 🛠️ Components
