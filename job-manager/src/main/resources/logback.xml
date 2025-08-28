@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Console Appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+	        <Pattern>
+	                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1}): %msg%n%throwable
+	        </Pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender with Rolling Policy -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/helios-job-sched-mgr-app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/helios-job-sched-mgr-app-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory> <!-- Keep logs for the last 10 days -->
+            <maxFileSize>10MB</maxFileSize> <!-- Rotate when size reaches to 10 mb -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+    <logger name="com.scheduler" level="debug" additivity="false">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+    </logger>
+</configuration>
