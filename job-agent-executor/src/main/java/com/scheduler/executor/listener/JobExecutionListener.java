@@ -85,7 +85,8 @@ public class JobExecutionListener {
 	    JobExecutionResult result = new JobExecutionResult(
 	        request.getExecutionId(), 
 	        request.getJobId(), 
-	        agentHealthService.getAgentId()
+	        agentHealthService.getAgentId(),
+	        request.getQueuedTime()
 	    );
 	    result.setSuccess(false);
 	    result.setErrorMessage("Max retries exceeded: " + e.getMessage());

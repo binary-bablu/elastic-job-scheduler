@@ -14,11 +14,11 @@ public class JobExecutionRequest {
     private String scriptPath;
     private Map<String, String> parameters;
     private LocalDateTime scheduledTime;
-    private LocalDateTime triggerTime;
     private Integer executionId; // Unique execution ID
     private int retryCount = 0;
     private int maxRetries = 3;
     private int timeoutSeconds = 300;
+    private LocalDateTime queuedTime;
     
     public JobExecutionRequest() {}
     
@@ -27,7 +27,6 @@ public class JobExecutionRequest {
         this.jobName = jobName;
         this.jobGroup = jobGroup;
         this.scriptPath = scriptPath;
-        this.triggerTime = LocalDateTime.now();
     }
     
 	public Integer getJobId() {
@@ -66,12 +65,6 @@ public class JobExecutionRequest {
 	public void setScheduledTime(LocalDateTime scheduledTime) {
 		this.scheduledTime = scheduledTime;
 	}
-	public LocalDateTime getTriggerTime() {
-		return triggerTime;
-	}
-	public void setTriggerTime(LocalDateTime triggerTime) {
-		this.triggerTime = triggerTime;
-	}
 	public Integer getExecutionId() {
 		return executionId;
 	}
@@ -95,6 +88,14 @@ public class JobExecutionRequest {
 	}
 	public void setTimeoutSeconds(int timeoutSeconds) {
 		this.timeoutSeconds = timeoutSeconds;
+	}
+
+	public LocalDateTime getQueuedTime() {
+		return queuedTime;
+	}
+
+	public void setQueuedTime(LocalDateTime queuedTime) {
+		this.queuedTime = queuedTime;
 	}
 
 }

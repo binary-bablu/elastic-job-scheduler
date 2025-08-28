@@ -29,6 +29,9 @@ public class JobExecInfo {
 	
     @Column(name="queue_time")
     private Timestamp queueTime;
+    
+    @Column(name="execution_time")
+    private Timestamp executionStartTime;
 	
     @Column(name="exec_finish_time")
     private Timestamp execFinishTime;
@@ -74,6 +77,14 @@ public class JobExecInfo {
 
 	public void setExecutionId(Integer executionId) {
 		this.executionId = executionId;
+	}
+
+	public Timestamp getExecutionStartTime() {
+		return executionStartTime;
+	}
+
+	public void setExecutionStartTime(Timestamp executionStartTime) {
+		this.executionStartTime = executionStartTime;
 	}
 
 }

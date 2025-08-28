@@ -27,7 +27,7 @@ private static final Logger logger = LoggerFactory.getLogger(JobResultListener.c
         try {
             // Update execution status
             String status = result.isSuccess() ? "COMPLETED" : "FAILED";
-            jobQueueService.updateJobExecutionStatus(result.getExecutionId(), status);
+            jobQueueService.updateJobExecutionStatus(result,status);
             
             // Here you could:
             // 1. Update job statistics in database

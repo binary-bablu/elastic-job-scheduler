@@ -43,9 +43,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
             request.setJobName(context.getJobDetail().getKey().getName());
             request.setJobGroup(context.getJobDetail().getKey().getGroup());
             request.setScriptPath(dataMap.getString("scriptPath"));
-            request.setScheduledTime(LocalDateTime.now());
-            request.setTriggerTime(LocalDateTime.now());
-            //request.setExecutionId(generateExecutionId(context));
+            request.setQueuedTime(LocalDateTime.now());
             
             // Extract parameters
             Map<String, String> parameters = new HashMap<>();
@@ -60,7 +58,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
             request.setTimeoutSeconds(getIntValue(dataMap, "timeoutSeconds", 300));
             request.setMaxRetries(getIntValue(dataMap, "maxRetries", 3));
             
-            JobExecInfo jobExecInfo = jobExecInfoRepository.save(createJobExecInfoEntity(request));
+            JobExecInfo jobExecInfo = jobExecInfoRepository.save(createJobExecInfoEntity(request,"QUEUED"));
             request.setExecutionId(jobExecInfo.getExecutionId());
             // Publish to execution queue
             jobQueueService.publishJobExecution(request);
@@ -93,15 +91,14 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
         return defaultValue;
     }
     
-    private JobExecInfo createJobExecInfoEntity(JobExecutionRequest jobExecRequest) {
+    private JobExecInfo createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
     	
     	JobExecInfo jobExecInfo = new JobExecInfo();
     	jobExecInfo.setJobId(jobExecRequest.getJobId());
-    	jobExecInfo.setStatus("QUEUED");
-    	jobExecInfo.setQueueTime(Timestamp.valueOf(jobExecRequest.getScheduledTime()));
+    	jobExecInfo.setStatus(status);
+    	jobExecInfo.setQueueTime(Timestamp.valueOf(jobExecRequest.getQueuedTime()));
     	
     	return jobExecInfo;
-    	
     }
 	
 }

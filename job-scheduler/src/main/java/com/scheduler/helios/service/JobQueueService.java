@@ -1,6 +1,8 @@
 package com.scheduler.helios.service;
 
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.scheduler.helios.config.RabbitMQConfig;
 import com.scheduler.helios.dto.JobExecutionRequest;
+import com.scheduler.helios.dto.JobExecutionResult;
 import com.scheduler.helios.entity.JobExecInfo;
 import com.scheduler.helios.repository.JobExecInfoRepository;
 
@@ -29,10 +32,6 @@ public class JobQueueService {
        
     	try {
     		
-    		JobExecInfo jobExecInfo = new JobExecInfo();
-    		jobExecInfo.setJobId(request.getJobId());
-    		jobExecInfo.setStatus("QUEUED");
-    		
             // Publish to execution queue
             rabbitTemplate.convertAndSend(
                 RabbitMQConfig.JOB_EXCHANGE,
@@ -40,10 +39,8 @@ public class JobQueueService {
                 request
             );
             
-            jobExecInfoRepository.save(jobExecInfo);
-            
             logger.info("Published job execution request: {} for job: {}", 
-            		request.getJobId(),jobExecInfo.getExecutionId());
+            		request.getJobId(),request.getExecutionId());
                        
         } catch (Exception e) {
             logger.error("Failed to publish job execution request: {}", request.getExecutionId(), e);
@@ -51,13 +48,18 @@ public class JobQueueService {
         }
     }
     
-    public void updateJobExecutionStatus(Integer executionId, String status) {
+    public void updateJobExecutionStatus(JobExecutionResult result,String status) {
        
         JobExecInfo jobExecInfo = new JobExecInfo();
-        jobExecInfo.setExecutionId(executionId);
+        jobExecInfo.setExecutionId(result.getExecutionId());
         jobExecInfo.setStatus(status);
+        jobExecInfo.setJobId(result.getJobId());
+        jobExecInfo.setExecFinishTime(Timestamp.valueOf(result.getEndTime()));
+        jobExecInfo.setExecutionStartTime(Timestamp.valueOf(result.getStartTime()));
+        jobExecInfo.setQueueTime(Timestamp.valueOf(result.getQueuedTime()));
         
         jobExecInfoRepository.save(jobExecInfo);
+        
         
     }
     

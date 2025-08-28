@@ -8,7 +8,7 @@
   <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>elastic job scheduler</name>
-  <description>Multi-module Spring Boot Quartz scheduler (job-manager, job-scheduler, job-agent-executor)</description>
+  <description>Multi-module Spring Boot Quartz based generic scheduler (job-manager, job-scheduler, job-agent-executor)</description>
 
   <modules>
     <module>job-manager</module>

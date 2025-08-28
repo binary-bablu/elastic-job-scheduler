@@ -4,6 +4,7 @@ package com.scheduler.executor.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -13,11 +14,14 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.scheduler.executor.dto.JobExecutionRequest;
 import com.scheduler.executor.dto.JobExecutionResult;
+import com.scheduler.executor.repository.JobExecInfoRepository;
+import com.scheduler.executor.entity.JobExecInfo;
 
 @Service
 public class JobExecutorService {
@@ -27,12 +31,16 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
     @Value("${executor.agent.id}")
     private String agentId;
     
+    @Autowired
+    private JobExecInfoRepository jobExecInfoRepository;
+    
     public JobExecutionResult executeJob(JobExecutionRequest request) {
     	
         JobExecutionResult result = new JobExecutionResult(
             request.getExecutionId(), 
             request.getJobId(), 
-            agentId
+            agentId,
+            request.getQueuedTime()
         );
         
         LocalDateTime startTime = LocalDateTime.now();
@@ -41,6 +49,9 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
         logger.info("Agent {} executing job: {} ({})", agentId, request.getJobName(), request.getExecutionId());
         
         try {
+        	
+        	jobExecInfoRepository.save(createJobExecInfoEntity(request,"EXECUTING"));
+        	
             // Build command
             List<String> command = buildCommand(request);
             
@@ -120,6 +131,18 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
         }
         
         return command;
+    }
+    
+    private JobExecInfo createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
+    	
+    	JobExecInfo jobExecInfo = new JobExecInfo();
+    	jobExecInfo.setJobId(jobExecRequest.getJobId());
+    	jobExecInfo.setExecutionId(jobExecRequest.getExecutionId());
+    	jobExecInfo.setStatus(status);
+    	jobExecInfo.setExecutionStartTime(Timestamp.valueOf(LocalDateTime.now()));
+    	jobExecInfo.setQueueTime(Timestamp.valueOf(jobExecRequest.getQueuedTime()));
+    	
+    	return jobExecInfo;
     }
 
 }

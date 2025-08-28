@@ -19,6 +19,7 @@ public class JobExecutionRequest {
     private int retryCount = 0;
     private int maxRetries = 3;
     private int timeoutSeconds = 300;
+    private LocalDateTime queuedTime;
     
     public JobExecutionRequest() {}
     
@@ -96,6 +97,13 @@ public class JobExecutionRequest {
 	}
 	public void setTimeoutSeconds(int timeoutSeconds) {
 		this.timeoutSeconds = timeoutSeconds;
+	}
+	public LocalDateTime getQueuedTime() {
+		return queuedTime;
+	}
+
+	public void setQueuedTime(LocalDateTime queuedTime) {
+		this.queuedTime = queuedTime;
 	}
 
 }
