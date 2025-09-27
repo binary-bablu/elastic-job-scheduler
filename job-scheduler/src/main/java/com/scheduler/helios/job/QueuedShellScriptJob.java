@@ -60,6 +60,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
             
             JobExecInfo jobExecInfo = jobExecInfoRepository.save(createJobExecInfoEntity(request,"QUEUED"));
             request.setExecutionId(jobExecInfo.getExecutionId());
+          
             // Publish to execution queue
             jobQueueService.publishJobExecution(request);
             
@@ -96,7 +97,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
     	JobExecInfo jobExecInfo = new JobExecInfo();
     	jobExecInfo.setJobId(jobExecRequest.getJobId());
     	jobExecInfo.setStatus(status);
-    	jobExecInfo.setQueueTime(Timestamp.valueOf(jobExecRequest.getQueuedTime()));
+    	jobExecInfo.setQueuedStartTime(Timestamp.valueOf(jobExecRequest.getQueuedTime()));
     	
     	return jobExecInfo;
     }

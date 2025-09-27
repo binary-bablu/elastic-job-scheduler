@@ -3,20 +3,15 @@ package com.scheduler.helios.listerner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.scheduler.helios.config.RabbitMQConfig;
 import com.scheduler.helios.dto.JobExecutionResult;
-import com.scheduler.helios.service.JobQueueService;
 
 @Component
 public class JobResultListener {
 
 private static final Logger logger = LoggerFactory.getLogger(JobResultListener.class);
-    
-    @Autowired
-    private JobQueueService jobQueueService;
     
     @RabbitListener(queues = RabbitMQConfig.JOB_RESULT_QUEUE)
     public void handleJobResult(JobExecutionResult result) {
@@ -26,8 +21,8 @@ private static final Logger logger = LoggerFactory.getLogger(JobResultListener.c
         
         try {
             // Update execution status
-            String status = result.isSuccess() ? "COMPLETED" : "FAILED";
-            jobQueueService.updateJobExecutionStatus(result,status);
+            //String status = result.isSuccess() ? "COMPLETED" : "FAILED";
+            //jobQueueService.updateJobExecutionStatus(result,status);
             
             // Here you could:
             // 1. Update job statistics in database
