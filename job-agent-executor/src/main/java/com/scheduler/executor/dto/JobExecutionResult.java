@@ -17,16 +17,14 @@ public class JobExecutionResult {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private long durationMs;
-    private LocalDateTime queuedTime;
     
     public JobExecutionResult() {}
     
-    public JobExecutionResult(Integer executionId, Integer jobId, String agentId,LocalDateTime queuedTime ) {
+    public JobExecutionResult(Integer executionId, Integer jobId, String agentId) {
         this.executionId = executionId;
         this.jobId = jobId;
         this.agentId = agentId;
         this.startTime = LocalDateTime.now();
-        this.queuedTime = queuedTime;
     }
     
 	public Integer getExecutionId() {
@@ -89,11 +87,4 @@ public class JobExecutionResult {
 	public void setDurationMs(long durationMs) {
 		this.durationMs = durationMs;
 	}
-	public LocalDateTime getQueuedTime() {
-		return queuedTime;
-	}
-	public void setQueuedTime(LocalDateTime queuedTime) {
-		this.queuedTime = queuedTime;
-	}
-
 }
