@@ -1,6 +1,5 @@
 package com.scheduler.manager.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.quartz.SchedulerException;
@@ -89,18 +88,6 @@ public class JobManagerController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", e.getMessage()));
-        }
-    }
-
-    @GetMapping
-    public ResponseEntity<?> getAllJobs() {
-        
-    	try {
-            List<JobResponse> responses = jobSchedulerService.getAllJobs();
-            return ResponseEntity.ok(responses);
-        } catch (SchedulerException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Failed to get jobs: " + e.getMessage()));
         }
     }
 

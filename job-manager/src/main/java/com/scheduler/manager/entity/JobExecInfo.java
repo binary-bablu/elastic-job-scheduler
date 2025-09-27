@@ -27,22 +27,20 @@ public class JobExecInfo {
     @Column(name="status")
     private String status;
 	
-    @Column(name="queue_time")
-    private Timestamp queueTime;
-	
-    @Column(name="exec_finish_time")
-    private Timestamp execFinishTime;
+	@Column(name="queued_start_time")
+    private Timestamp queuedStartTime;
+    
+    @Column(name="queued_end_time")
+    private Timestamp queuedEndTime;
+    
+    @Column(name="exec_start_time")
+    private Timestamp execStartTime;
+    
+    @Column(name="exec_end_time")
+    private Timestamp execEndTime;
 	
     // Constructors
     public JobExecInfo() {}
-
-	public Integer getJobId() {
-		return jobId;
-	}
-
-	public void setJobId(Integer jobId) {
-		this.jobId = jobId;
-	}
 
 	public String getStatus() {
 		return status;
@@ -52,28 +50,53 @@ public class JobExecInfo {
 		this.status = status;
 	}
 
-	public Timestamp getQueueTime() {
-		return queueTime;
-	}
-
-	public void setQueueTime(Timestamp queueTime) {
-		this.queueTime = queueTime;
-	}
-
-	public Timestamp getExecFinishTime() {
-		return execFinishTime;
-	}
-
-	public void setExecFinishTime(Timestamp execFinishTime) {
-		this.execFinishTime = execFinishTime;
-	}
-
+	
 	public Integer getExecutionId() {
 		return executionId;
 	}
 
 	public void setExecutionId(Integer executionId) {
 		this.executionId = executionId;
+	}
+	
+	public Timestamp getQueuedStartTime() {
+		return queuedStartTime;
+	}
+
+	public void setQueuedStartTime(Timestamp queuedStartTime) {
+		this.queuedStartTime = queuedStartTime;
+	}
+
+	public Timestamp getQueuedEndTime() {
+		return queuedEndTime;
+	}
+
+	public void setQueuedEndTime(Timestamp queuedEndTime) {
+		this.queuedEndTime = queuedEndTime;
+	}
+
+	public Timestamp getExecStartTime() {
+		return execStartTime;
+	}
+
+	public void setExecStartTime(Timestamp execStartTime) {
+		this.execStartTime = execStartTime;
+	}
+
+	public Timestamp getExecEndTime() {
+		return execEndTime;
+	}
+
+	public void setExecEndTime(Timestamp execEndTime) {
+		this.execEndTime = execEndTime;
+	}
+
+	public Integer getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(Integer jobId) {
+		this.jobId = jobId;
 	}
 
 }

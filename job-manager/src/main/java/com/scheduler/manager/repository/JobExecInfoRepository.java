@@ -8,5 +8,7 @@ import com.scheduler.manager.entity.JobExecInfo;
 
 @Repository
 public interface JobExecInfoRepository extends JpaRepository<JobExecInfo, Integer> {
+	
+	public JobExecInfo findByJobIdAndExecutionId(Integer jobId, Integer exceutionId);
    
 }

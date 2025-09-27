@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,13 +22,30 @@ public class JobInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(name="job_name")
     private String jobName;
+    
+    @Column(name="job_group")
     private String jobGroup;
+    
+    @Column(name="description")
     private String description;
+    
+    @Column(name="cron_expression")
     private String cronExpression;
+    
+    @Column(name="script_path")
     private String scriptPath;
+    
+    @Column(name="created_at")
     private LocalDateTime createdAt;
+    
+    @Column(name="updated_at")
     private LocalDateTime updatedAt;
+    
+    @Column(name="status")
+    private String status;
 
     @OneToMany(mappedBy = "jobInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
@@ -114,7 +132,13 @@ public class JobInfo {
 	public void setScriptPath(String scriptPath) {
 		this.scriptPath = scriptPath;
 	}
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
     
 }
