@@ -12,7 +12,6 @@ public class QueuedShellScriptJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-    	System.out.print("hello world *******************");
    
     }
    

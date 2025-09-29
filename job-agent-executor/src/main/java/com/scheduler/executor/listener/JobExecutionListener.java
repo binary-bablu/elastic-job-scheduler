@@ -16,8 +16,8 @@ import com.rabbitmq.client.Channel;
 import com.scheduler.executor.config.RabbitMQConfig;
 import com.scheduler.executor.dto.JobExecutionRequest;
 import com.scheduler.executor.dto.JobExecutionResult;
-import com.scheduler.executor.entity.JobExecInfo;
-import com.scheduler.executor.repository.JobExecInfoRepository;
+import com.scheduler.executor.entity.JobExecution;
+import com.scheduler.executor.repository.JobExecutionsRepository;
 import com.scheduler.executor.service.AgentHealthService;
 import com.scheduler.executor.service.JobExecutorService;
 import com.scheduler.executor.service.JobExecutorStatusService;
@@ -41,7 +41,7 @@ public class JobExecutionListener {
     private JobExecutorStatusService jobExecutorStatusService;
 	
 	@Autowired
-    private JobExecInfoRepository jobExecInfoRepository;
+    private JobExecutionsRepository jobExecInfoRepository;
 	
 	@RabbitListener(queues = RabbitMQConfig.JOB_EXECUTION_QUEUE, concurrency = "#{@agentHealthService.maxConcurrentJobs}")
 	public void handleJobExecution(JobExecutionRequest request, Channel channel,
@@ -49,7 +49,7 @@ public class JobExecutionListener {
 	    
 	    // Check if agent can accept more jobs
 	    if (!agentHealthService.canAcceptMoreJobs()) {
-	        logger.warn("Agent at capacity, rejecting job: {}", request.getExecutionId());
+	        logger.warn("Agent at capacity, rejecting job execution id : {}", request.getExecutionId());
 	        // Message will be re-queued automatically
 	        throw new RuntimeException("Agent at capacity");
 	    }
@@ -69,7 +69,8 @@ public class JobExecutionListener {
 	        
 	    } catch (Exception e) {
 	    	
-	        logger.error("Error processing job: {}", request.getExecutionId(), e);
+	        logger.error("Error processing job execution id : {}", request.getExecutionId(), e);
+	        //Remove message
 	        channel.basicAck(deliveryTag, false);
 	        result = createFailureResult(request, e);
 	        
@@ -98,11 +99,11 @@ public class JobExecutionListener {
 	    return result;
 	}
 	
-	 private JobExecInfo createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
+	 private JobExecution createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
 	    	
 	 	LocalDateTime startTime = LocalDateTime.now();
 	 	jobExecRequest.setStartTime(startTime);
-    	JobExecInfo jobExecInfo = jobExecInfoRepository.
+    	JobExecution jobExecInfo = jobExecInfoRepository.
     			findByJobIdAndExecutionId(jobExecRequest.getJobId(),jobExecRequest.getExecutionId());
     	
     	jobExecInfo.setStatus(status);
@@ -112,9 +113,9 @@ public class JobExecutionListener {
     	return jobExecInfo;
 	 }
 	    
-	 private JobExecInfo updateJobExecInfoEntity(JobExecutionResult result) {
+	 private JobExecution updateJobExecInfoEntity(JobExecutionResult result) {
     	 String status = result.isSuccess() ? "COMPLETED" : "FAILED";
-         JobExecInfo jobExecInfo = jobExecInfoRepository.findByJobIdAndExecutionId(result.getJobId(),result.getExecutionId());
+         JobExecution jobExecInfo = jobExecInfoRepository.findByJobIdAndExecutionId(result.getJobId(),result.getExecutionId());
          jobExecInfo.setStatus(status);
          jobExecInfo.setExecStartTime(Timestamp.valueOf(result.getStartTime()));
          jobExecInfo.setExecEndTime(Timestamp.valueOf(result.getEndTime()));

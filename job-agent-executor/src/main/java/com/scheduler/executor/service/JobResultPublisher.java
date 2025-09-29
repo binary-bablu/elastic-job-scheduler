@@ -25,11 +25,11 @@ private static final Logger logger = LoggerFactory.getLogger(JobResultPublisher.
                 result
             );
             
-            logger.info("Published job result: {} - Success: {}", 
+            logger.info("Published job execution id result: {} - Success: {}", 
                        result.getExecutionId(), result.isSuccess());
                        
         } catch (Exception e) {
-            logger.error("Failed to publish job result: {}", result.getExecutionId(), e);
+            logger.error("Failed to publish job execution id result: {}", result.getExecutionId(), e);
             throw new RuntimeException("Failed to publish job result", e);
         }
     }

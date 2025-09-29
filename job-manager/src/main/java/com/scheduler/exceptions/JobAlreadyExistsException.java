@@ -1,8 +1,14 @@
 package com.scheduler.exceptions;
 
-public class JobAlreadyExistsException extends JobSchedulerException {
+public class JobAlreadyExistsException extends Throwable {
 	
-    public JobAlreadyExistsException(String jobName, String jobGroup) {
+    private static final long serialVersionUID = 1L;
+
+	public JobAlreadyExistsException(String jobName, String jobGroup) {
         super(String.format("Job already exists: %s.%s", jobGroup, jobName));
+    }
+    
+    public JobAlreadyExistsException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

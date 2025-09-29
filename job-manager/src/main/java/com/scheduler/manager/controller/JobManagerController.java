@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scheduler.exceptions.JobAlreadyExistsException;
+import com.scheduler.exceptions.JobNotFoundException;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
 import com.scheduler.manager.service.JobSchedulerService;
@@ -37,7 +39,7 @@ public class JobManagerController {
     	try {
             JobResponse response = jobSchedulerService.createJob(jobRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (SchedulerException e) {
+        } catch (JobAlreadyExistsException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to create job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -52,7 +54,7 @@ public class JobManagerController {
     	try {
             JobResponse response = jobSchedulerService.updateJob(jobId, jobRequest);
             return ResponseEntity.ok(response);
-        } catch (SchedulerException e) {
+        } catch (JobNotFoundException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to update job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -67,7 +69,7 @@ public class JobManagerController {
     	try {
             jobSchedulerService.deleteJob(jobId);
             return ResponseEntity.ok(Map.of("message", "Job deleted successfully"));
-        } catch (SchedulerException e) {
+        } catch (JobNotFoundException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to delete job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -82,7 +84,7 @@ public class JobManagerController {
     	try {
             JobResponse response = jobSchedulerService.getJob(jobId);
             return ResponseEntity.ok(response);
-        } catch (SchedulerException e) {
+        } catch (JobNotFoundException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to get job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -97,7 +99,7 @@ public class JobManagerController {
     	try {
             jobSchedulerService.pauseJob(jobId);
             return ResponseEntity.ok(Map.of("message", "Job paused successfully"));
-        } catch (SchedulerException e) {
+        } catch (JobNotFoundException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to pause job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -112,7 +114,7 @@ public class JobManagerController {
     	try {
             jobSchedulerService.resumeJob(jobId);
             return ResponseEntity.ok(Map.of("message", "Job resumed successfully"));
-        } catch (SchedulerException e) {
+        } catch (JobNotFoundException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to resume job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -127,7 +129,7 @@ public class JobManagerController {
     	try {
             jobSchedulerService.triggerJob(jobId);
             return ResponseEntity.ok(Map.of("message", "Job triggered successfully"));
-        } catch (SchedulerException e) {
+        } catch (JobNotFoundException | SchedulerException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Failed to trigger job: " + e.getMessage()));
         } catch (IllegalArgumentException e) {
@@ -135,5 +137,4 @@ public class JobManagerController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
-
 }

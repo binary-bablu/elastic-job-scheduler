@@ -31,7 +31,7 @@ import com.scheduler.exceptions.JobNotFoundException;
 import com.scheduler.helios.job.QueuedShellScriptJob;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
-import com.scheduler.manager.entity.JobInfo;
+import com.scheduler.manager.entity.JobScheduleDefinition;
 import com.scheduler.manager.repository.JobInfoRepository;
 
 @Service
@@ -54,7 +54,7 @@ public class JobSchedulerService {
         }
 
         // Save to database
-        JobInfo jobInfo = new JobInfo();
+        JobScheduleDefinition jobInfo = new JobScheduleDefinition();
         jobInfo.setJobName(jobRequest.getJobName());
         jobInfo.setJobGroup(jobRequest.getJobGroup());
         jobInfo.setCronExpression(jobRequest.getCronExpression());
@@ -79,12 +79,12 @@ public class JobSchedulerService {
     @Transactional
     public JobResponse updateJob(Integer jobId, JobRequest jobRequest) throws JobNotFoundException, SchedulerException {
        
-    	Optional<JobInfo> optionalJobInfo = jobInfoRepository.findById(jobId);
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
         if (optionalJobInfo.isEmpty()) {
             throw new JobNotFoundException(jobId);
         }
 
-        JobInfo jobInfo = optionalJobInfo.get();
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
         
         // Remove existing job from scheduler
         JobKey jobKey = new JobKey(jobInfo.getJobName(), jobInfo.getJobGroup());
@@ -114,12 +114,12 @@ public class JobSchedulerService {
     @Transactional
     public void deleteJob(Integer jobId) throws JobNotFoundException,SchedulerException {
         
-    	Optional<JobInfo> optionalJobInfo = jobInfoRepository.findById(jobId);
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
         if (optionalJobInfo.isEmpty()) {
             throw new JobNotFoundException(jobId);
         }
 
-        JobInfo jobInfo = optionalJobInfo.get();
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
         
         // Remove from scheduler
         JobKey jobKey = new JobKey(jobInfo.getJobName(), jobInfo.getJobGroup());
@@ -135,7 +135,7 @@ public class JobSchedulerService {
 
     public JobResponse getJob(Integer jobId) throws JobNotFoundException,SchedulerException {
         
-    	Optional<JobInfo> optionalJobInfo = jobInfoRepository.findById(jobId);
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
         if (optionalJobInfo.isEmpty()) {
             throw new JobNotFoundException(jobId);
         }
@@ -146,12 +146,12 @@ public class JobSchedulerService {
     @Transactional
     public void pauseJob(Integer jobId) throws JobNotFoundException,SchedulerException {
       
-    	Optional<JobInfo> optionalJobInfo = jobInfoRepository.findById(jobId);
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
         if (optionalJobInfo.isEmpty()) {
             throw new JobNotFoundException(jobId);
         }
 
-        JobInfo jobInfo = optionalJobInfo.get();
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
         jobInfo.setStatus("PAUSED");
         JobKey jobKey = new JobKey(jobInfo.getJobName(), jobInfo.getJobGroup());
         
@@ -165,12 +165,12 @@ public class JobSchedulerService {
     @Transactional
     public void resumeJob(Integer jobId) throws JobNotFoundException,SchedulerException {
       
-    	Optional<JobInfo> optionalJobInfo = jobInfoRepository.findById(jobId);
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
         if (optionalJobInfo.isEmpty()) {
             throw new JobNotFoundException(jobId);
         }
 
-        JobInfo jobInfo = optionalJobInfo.get();
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
         JobKey jobKey = new JobKey(jobInfo.getJobName(), jobInfo.getJobGroup());
         
         if (scheduler.checkExists(jobKey)) {
@@ -184,12 +184,12 @@ public class JobSchedulerService {
     @Transactional
     public void triggerJob(Integer jobId) throws JobNotFoundException,SchedulerException {
         
-    	Optional<JobInfo> optionalJobInfo = jobInfoRepository.findById(jobId);
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
         if (optionalJobInfo.isEmpty()) {
             throw new JobNotFoundException(jobId);
         }
 
-        JobInfo jobInfo = optionalJobInfo.get();
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
         JobKey jobKey = new JobKey(jobInfo.getJobName(), jobInfo.getJobGroup());
         
         if (scheduler.checkExists(jobKey)) {
@@ -198,7 +198,7 @@ public class JobSchedulerService {
         }
     }
 
-    private void scheduleQuartzJob(JobInfo jobInfo) throws SchedulerException {
+    private void scheduleQuartzJob(JobScheduleDefinition jobInfo) throws SchedulerException {
     	
     	JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("scriptPath", jobInfo.getScriptPath());
@@ -242,7 +242,7 @@ public class JobSchedulerService {
         }
     }
 
-    private JobResponse convertToResponse(JobInfo jobInfo) throws SchedulerException {
+    private JobResponse convertToResponse(JobScheduleDefinition jobInfo) throws SchedulerException {
     	
         JobResponse response = new JobResponse();
         response.setId(jobInfo.getId());

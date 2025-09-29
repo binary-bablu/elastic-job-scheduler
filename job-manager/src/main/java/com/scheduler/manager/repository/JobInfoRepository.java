@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.scheduler.manager.entity.JobInfo;
+import com.scheduler.manager.entity.JobScheduleDefinition;
 
 @Repository
-public interface JobInfoRepository extends JpaRepository<JobInfo, Integer> {
+public interface JobInfoRepository extends JpaRepository<JobScheduleDefinition, Integer> {
 	
-    Optional<JobInfo> findByJobNameAndJobGroup(String jobName, String jobGroup);
+    Optional<JobScheduleDefinition> findByJobNameAndJobGroup(String jobName, String jobGroup);
     boolean existsByJobNameAndJobGroup(String jobName, String jobGroup);
     
 }

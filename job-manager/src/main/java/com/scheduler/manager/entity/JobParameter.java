@@ -22,7 +22,7 @@ public class JobParameter {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_info_id")
-    private JobInfo jobInfo;
+    private JobScheduleDefinition jobScheduleDefinition;
 
 	public Integer getId() {
 		return id;
@@ -48,13 +48,12 @@ public class JobParameter {
 		this.paramValue = paramValue;
 	}
 
-	public JobInfo getJobInfo() {
-		return jobInfo;
+	public JobScheduleDefinition getJobScheduleDefinition() {
+		return jobScheduleDefinition;
 	}
 
-	public void setJobInfo(JobInfo jobInfo) {
-		this.jobInfo = jobInfo;
+	public void setJobScheduleDefinition(JobScheduleDefinition jobScheduleDefinition) {
+		this.jobScheduleDefinition = jobScheduleDefinition;
 	}
-    
  }
 

@@ -82,7 +82,7 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
             
         } catch (IOException | InterruptedException e) {
           
-        	logger.error("Error executing job: {} - {}", request.getExecutionId(), e.getMessage(), e);
+        	logger.error("Error executing job execution id : {} - {}", request.getExecutionId(), e.getMessage(), e);
             result.setSuccess(false);
             result.setErrorMessage("Execution error: " + e.getMessage());
             result.setExitCode(-2);
@@ -96,7 +96,7 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
         result.setEndTime(endTime);
         result.setDurationMs(ChronoUnit.MILLIS.between(result.getStartTime(), endTime));
         
-        logger.info("Job execution completed: {} - Success: {} in {}ms", 
+        logger.info("Job execution id completed: {} - Success: {} in {}ms", 
                    request.getExecutionId(), result.isSuccess(), result.getDurationMs());
         
         return result;

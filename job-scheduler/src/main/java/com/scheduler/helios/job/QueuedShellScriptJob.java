@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.scheduler.helios.dto.JobExecutionRequest;
-import com.scheduler.helios.entity.JobExecInfo;
-import com.scheduler.helios.repository.JobExecInfoRepository;
+import com.scheduler.helios.entity.JobExecution;
+import com.scheduler.helios.repository.JobExecutionsRepository;
 import com.scheduler.helios.service.JobQueueService;
 
 import java.sql.Timestamp;
@@ -26,7 +26,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
     private JobQueueService jobQueueService;
     
     @Autowired
-    private JobExecInfoRepository jobExecInfoRepository;
+    private JobExecutionsRepository jobExecInfoRepository;
     
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -58,7 +58,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
             request.setTimeoutSeconds(getIntValue(dataMap, "timeoutSeconds", 300));
             request.setMaxRetries(getIntValue(dataMap, "maxRetries", 3));
             
-            JobExecInfo jobExecInfo = jobExecInfoRepository.save(createJobExecInfoEntity(request,"QUEUED"));
+            JobExecution jobExecInfo = jobExecInfoRepository.save(createJobExecInfoEntity(request,"QUEUED"));
             request.setExecutionId(jobExecInfo.getExecutionId());
           
             // Publish to execution queue
@@ -92,9 +92,9 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
         return defaultValue;
     }
     
-    private JobExecInfo createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
+    private JobExecution createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
     	
-    	JobExecInfo jobExecInfo = new JobExecInfo();
+    	JobExecution jobExecInfo = new JobExecution();
     	jobExecInfo.setJobId(jobExecRequest.getJobId());
     	jobExecInfo.setStatus(status);
     	jobExecInfo.setQueuedStartTime(Timestamp.valueOf(jobExecRequest.getQueuedTime()));

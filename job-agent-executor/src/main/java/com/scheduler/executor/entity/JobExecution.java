@@ -1,4 +1,4 @@
-package com.scheduler.manager.entity;
+package com.scheduler.executor.entity;
 
 
 import java.sql.Timestamp;
@@ -12,8 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "job_exec_info")
-public class JobExecInfo {
+@Table(name = "job_executions")
+public class JobExecution {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +39,15 @@ public class JobExecInfo {
     @Column(name="exec_end_time")
     private Timestamp execEndTime;
 	
-    // Constructors
-    public JobExecInfo() {}
+    public JobExecution() {}
+
+	public Integer getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(Integer jobId) {
+		this.jobId = jobId;
+	}
 
 	public String getStatus() {
 		return status;
@@ -50,7 +57,6 @@ public class JobExecInfo {
 		this.status = status;
 	}
 
-	
 	public Integer getExecutionId() {
 		return executionId;
 	}
@@ -58,7 +64,7 @@ public class JobExecInfo {
 	public void setExecutionId(Integer executionId) {
 		this.executionId = executionId;
 	}
-	
+
 	public Timestamp getQueuedStartTime() {
 		return queuedStartTime;
 	}
@@ -90,13 +96,5 @@ public class JobExecInfo {
 	public void setExecEndTime(Timestamp execEndTime) {
 		this.execEndTime = execEndTime;
 	}
-
-	public Integer getJobId() {
-		return jobId;
-	}
-
-	public void setJobId(Integer jobId) {
-		this.jobId = jobId;
-	}
-
+	
 }

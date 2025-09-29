@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,21 +16,39 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "job_info")
-public class JobInfo {
+@Table(name = "job_schedule_definitions")
+public class JobScheduleDefinition {
 
-    @Id
+  	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @Column(name="job_name")
     private String jobName;
+    
+    @Column(name="job_group")
     private String jobGroup;
+    
+    @Column(name="description")
     private String description;
+    
+    @Column(name="cron_expression")
     private String cronExpression;
+    
+    @Column(name="script_path")
     private String scriptPath;
+    
+    @Column(name="created_at")
     private LocalDateTime createdAt;
+    
+    @Column(name="updated_at")
     private LocalDateTime updatedAt;
+    
+    @Column(name="status")
+    private String status;
 
-    @OneToMany(mappedBy = "jobInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "jobScheduleDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
 
     // Add/remove helpers
@@ -37,7 +56,7 @@ public class JobInfo {
         JobParameter param = new JobParameter();
         param.setParamKey(key);
         param.setParamValue(value);
-        param.setJobInfo(this);
+        param.setJobScheduleDefinition(this);
         this.parameters.add(param);
     }
 
@@ -114,7 +133,5 @@ public class JobInfo {
 	public void setScriptPath(String scriptPath) {
 		this.scriptPath = scriptPath;
 	}
-	
-	
     
 }

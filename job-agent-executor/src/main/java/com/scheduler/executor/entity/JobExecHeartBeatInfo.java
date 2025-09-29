@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "job_execution_heartbeat_info")
-public class JobExecHeartBeatInfoEntity {
+public class JobExecHeartBeatInfo {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class JobExecHeartBeatInfoEntity {
     private String agentId;
 	
     // Constructors
-    public JobExecHeartBeatInfoEntity() {}
+    public JobExecHeartBeatInfo() {}
 
 	public String getLastHeartBeat() {
 		return lastHeartBeat;

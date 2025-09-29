@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.scheduler.manager.entity.JobDependency;
-import com.scheduler.manager.entity.JobInfo;
+import com.scheduler.manager.entity.JobScheduleDefinition;
 
 @Repository
 public interface JobDependencyRepository extends JpaRepository<JobDependency, Integer> {
-    List<JobDependency> findByParentJobAndIsActiveTrue(JobInfo parentJob);
-    List<JobDependency> findByDependentJobAndIsActiveTrue(JobInfo dependentJob);
-    boolean existsByParentJobAndDependentJobAndIsActiveTrue(JobInfo parentJob, JobInfo dependentJob);
+    List<JobDependency> findByParentJobAndIsActiveTrue(JobScheduleDefinition parentJob);
+    List<JobDependency> findByDependentJobAndIsActiveTrue(JobScheduleDefinition dependentJob);
+    boolean existsByParentJobAndDependentJobAndIsActiveTrue(JobScheduleDefinition parentJob, JobScheduleDefinition dependentJob);
 }

@@ -21,11 +21,11 @@ public class JobDependency {
 	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_job_id", nullable = false)
-    private JobInfo parentJob;
+    private JobScheduleDefinition parentJob;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dependent_job_id", nullable = false)
-    private JobInfo dependentJob;
+    private JobScheduleDefinition dependentJob;
     
     @Column(name = "dependency_type", nullable = false)
     private String dependencyType;
@@ -36,19 +36,19 @@ public class JobDependency {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
-	public JobInfo getParentJob() {
+	public JobScheduleDefinition getParentJob() {
 		return parentJob;
 	}
 
-	public void setParentJob(JobInfo parentJob) {
+	public void setParentJob(JobScheduleDefinition parentJob) {
 		this.parentJob = parentJob;
 	}
 
-	public JobInfo getDependentJob() {
+	public JobScheduleDefinition getDependentJob() {
 		return dependentJob;
 	}
 
-	public void setDependentJob(JobInfo dependentJob) {
+	public void setDependentJob(JobScheduleDefinition dependentJob) {
 		this.dependentJob = dependentJob;
 	}
 

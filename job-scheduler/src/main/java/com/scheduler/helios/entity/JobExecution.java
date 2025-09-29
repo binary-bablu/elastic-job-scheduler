@@ -12,8 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "job_exec_info")
-public class JobExecInfo {
+@Table(name = "job_executions")
+public class JobExecution {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class JobExecInfo {
     private Timestamp execEndTime;
 	
     // Constructors
-    public JobExecInfo() {}
+    public JobExecution() {}
 
 	public String getStatus() {
 		return status;

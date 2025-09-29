@@ -1,8 +1,14 @@
 package com.scheduler.exceptions;
 
-public class JobNotFoundException extends JobSchedulerException {
+public class JobNotFoundException extends Throwable {
 	
-    public JobNotFoundException(Integer jobDefinitionId) {
+    private static final long serialVersionUID = 1L;
+
+	public JobNotFoundException(Integer jobDefinitionId) {
         super(String.format("Job not found: %s", jobDefinitionId));
+    }
+    
+    public JobNotFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

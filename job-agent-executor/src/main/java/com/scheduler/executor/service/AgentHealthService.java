@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.scheduler.executor.entity.JobExecHeartBeatInfoEntity;
+import com.scheduler.executor.entity.JobExecHeartBeatInfo;
 import com.scheduler.executor.repository.JobExecHeartBeatInfoRepository;
 
 import jakarta.annotation.PostConstruct;
@@ -52,7 +52,7 @@ private static final Logger logger = LoggerFactory.getLogger(AgentHealthService.
         
         	String agentKey = "agent:" + agentId;
             
-            JobExecHeartBeatInfoEntity jobExecHeartBeatInfoEntity = createJobExecHeartBeatentity(agentKey);
+            JobExecHeartBeatInfo jobExecHeartBeatInfoEntity = createJobExecHeartBeatentity(agentKey);
             jobExecHeartBeatInfoRepository.save(jobExecHeartBeatInfoEntity);
             
             logger.debug("Heartbeat sent for agent: {} - Active jobs: {}/{}", 
@@ -63,9 +63,9 @@ private static final Logger logger = LoggerFactory.getLogger(AgentHealthService.
         }
     }
     
-    private JobExecHeartBeatInfoEntity createJobExecHeartBeatentity(String agentId ) {
+    private JobExecHeartBeatInfo createJobExecHeartBeatentity(String agentId ) {
     	
-    	JobExecHeartBeatInfoEntity jobExecHeartBeatInfoEntity = new JobExecHeartBeatInfoEntity();
+    	JobExecHeartBeatInfo jobExecHeartBeatInfoEntity = new JobExecHeartBeatInfo();
     	jobExecHeartBeatInfoEntity.setStatus("ACTIVE");
     	jobExecHeartBeatInfoEntity.setLastHeartBeat(LocalDateTime.now().toString());
     	jobExecHeartBeatInfoEntity.setMaxConcurrentJobs(maxConcurrentJobs);

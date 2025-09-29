@@ -16,8 +16,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "job_info")
-public class JobInfo {
+@Table(name = "job_schedule_definitions")
+public class JobScheduleDefinition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class JobInfo {
     @Column(name="status")
     private String status;
 
-    @OneToMany(mappedBy = "jobInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "jobScheduleDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
 
     // Add/remove helpers
@@ -55,7 +55,7 @@ public class JobInfo {
         JobParameter param = new JobParameter();
         param.setParamKey(key);
         param.setParamValue(value);
-        param.setJobInfo(this);
+        param.setJobScheduleDefinition(this);
         this.parameters.add(param);
     }
 
