@@ -132,6 +132,46 @@ public class JobSchedulerService {
         logger.info("Job Removed from database and scheduler : "+ response);
         
     }
+    
+    @Transactional
+    public void inactivateJob(Integer jobId) throws JobNotFoundException,SchedulerException {
+        
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
+        if (optionalJobInfo.isEmpty()) {
+            throw new JobNotFoundException(jobId);
+        }
+
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
+        jobInfo.setStatus("INACTIVE");
+        
+        // Remove from scheduler
+        JobKey jobKey = new JobKey(jobInfo.getJobName(), jobInfo.getJobGroup());
+        if (scheduler.checkExists(jobKey)) {
+            scheduler.deleteJob(jobKey);
+        }
+        // Update status in db
+        jobInfoRepository.save(jobInfo);
+        JobResponse response  = convertToResponse(jobInfo);
+        logger.info("Job Inactivated in database and scheduler : "+ response);
+    }
+    
+    @Transactional
+    public void activateJob(Integer jobId) throws JobNotFoundException,SchedulerException {
+        
+    	Optional<JobScheduleDefinition> optionalJobInfo = jobInfoRepository.findById(jobId);
+        if (optionalJobInfo.isEmpty()) {
+            throw new JobNotFoundException(jobId);
+        }
+
+        JobScheduleDefinition jobInfo = optionalJobInfo.get();
+        jobInfo.setStatus("ACTIVE");
+        
+        jobInfo = jobInfoRepository.save(jobInfo);
+        
+        scheduleQuartzJob(jobInfo);
+        JobResponse response  = convertToResponse(jobInfo);
+        logger.info("Job Activated in database and scheduler : "+ response);
+    }
 
     public JobResponse getJob(Integer jobId) throws JobNotFoundException,SchedulerException {
         

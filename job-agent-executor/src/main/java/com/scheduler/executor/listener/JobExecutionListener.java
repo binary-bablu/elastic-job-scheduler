@@ -40,9 +40,6 @@ public class JobExecutionListener {
 	@Autowired
     private JobExecutorStatusService jobExecutorStatusService;
 	
-	@Autowired
-    private JobExecutionsRepository jobExecInfoRepository;
-	
 	@RabbitListener(queues = RabbitMQConfig.JOB_EXECUTION_QUEUE, concurrency = "#{@agentHealthService.maxConcurrentJobs}")
 	public void handleJobExecution(JobExecutionRequest request, Channel channel,
 	                             @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
@@ -62,7 +59,7 @@ public class JobExecutionListener {
 	    JobExecutionResult result = null;
 	    try {
 	    	
-	    	jobExecutorStatusService.createJobExecutionEntry(createJobExecInfoEntity(request,"EXECUTING"));
+	    	jobExecutorStatusService.createJobExecutionEntry(request,"RUNNING");
         	
 	        // Execute the job
 	        result = jobExecutorService.executeJob(request);
@@ -70,13 +67,15 @@ public class JobExecutionListener {
 	    } catch (Exception e) {
 	    	
 	        logger.error("Error processing job execution id : {}", request.getExecutionId(), e);
+	       
 	        //Remove message
 	        channel.basicAck(deliveryTag, false);
 	        result = createFailureResult(request, e);
 	        
 	    } finally {
 	        agentHealthService.decrementActiveJobs();
-	        jobExecutorStatusService.updateJobExecutionEntry(updateJobExecInfoEntity(result));
+	        jobExecutorStatusService.updateJobExecutionEntry(result);
+	        
 	        // Publish result back to scheduler
 	        jobResultPublisher.publishResult(result);
 	    }
@@ -98,29 +97,5 @@ public class JobExecutionListener {
 	    result.setExitCode(-998);
 	    return result;
 	}
-	
-	 private JobExecution createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
-	    	
-	 	LocalDateTime startTime = LocalDateTime.now();
-	 	jobExecRequest.setStartTime(startTime);
-    	JobExecution jobExecInfo = jobExecInfoRepository.
-    			findByJobIdAndExecutionId(jobExecRequest.getJobId(),jobExecRequest.getExecutionId());
-    	
-    	jobExecInfo.setStatus(status);
-    	jobExecInfo.setExecStartTime(Timestamp.valueOf(startTime));
-    	jobExecInfo.setQueuedEndTime(Timestamp.valueOf(startTime));
-    	
-    	return jobExecInfo;
-	 }
-	    
-	 private JobExecution updateJobExecInfoEntity(JobExecutionResult result) {
-    	 String status = result.isSuccess() ? "COMPLETED" : "FAILED";
-         JobExecution jobExecInfo = jobExecInfoRepository.findByJobIdAndExecutionId(result.getJobId(),result.getExecutionId());
-         jobExecInfo.setStatus(status);
-         jobExecInfo.setExecStartTime(Timestamp.valueOf(result.getStartTime()));
-         jobExecInfo.setExecEndTime(Timestamp.valueOf(result.getEndTime()));
-         
-         return jobExecInfo;
-	 }
 
 }

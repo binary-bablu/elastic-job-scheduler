@@ -122,8 +122,38 @@ public class JobManagerController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+    
+    @PostMapping("/{jobId}/inactivate")
+    public ResponseEntity<?> inactivate(@PathVariable Integer jobId) {
+      
+    	try {
+            jobSchedulerService.inactivateJob(jobId);
+            return ResponseEntity.ok(Map.of("message", "Job Inactivated successfully"));
+        } catch (JobNotFoundException | SchedulerException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Failed to Inactivate job: " + e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    @PostMapping("/{jobId}/activate")
+    public ResponseEntity<?> activate(@PathVariable Integer jobId) {
+      
+    	try {
+            jobSchedulerService.activateJob(jobId);
+            return ResponseEntity.ok(Map.of("message", "Job Activated successfully"));
+        } catch (JobNotFoundException | SchedulerException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Failed to Activate job: " + e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 
-    @PostMapping("/{jobId}/trigger")
+    @PostMapping("/{jobId}/invoke_now")
     public ResponseEntity<?> triggerJob(@PathVariable Integer jobId) {
        
     	try {
