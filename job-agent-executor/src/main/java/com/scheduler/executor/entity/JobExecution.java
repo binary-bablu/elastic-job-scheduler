@@ -39,6 +39,9 @@ public class JobExecution {
     @Column(name="exec_end_time")
     private Timestamp execEndTime;
 	
+    @Column(name="error_message")
+    private String errorMessage;
+    
     public JobExecution() {}
 
 	public Integer getJobId() {
@@ -95,6 +98,14 @@ public class JobExecution {
 
 	public void setExecEndTime(Timestamp execEndTime) {
 		this.execEndTime = execEndTime;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 	
 }

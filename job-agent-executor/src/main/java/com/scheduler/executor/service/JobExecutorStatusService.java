@@ -53,6 +53,7 @@ public class JobExecutorStatusService {
          jobExecInfo.setStatus(status);
          jobExecInfo.setExecStartTime(Timestamp.valueOf(result.getStartTime()));
          jobExecInfo.setExecEndTime(Timestamp.valueOf(result.getEndTime()));
+         jobExecInfo.setErrorMessage(result.getErrorMessage());
          
          return jobExecInfo;
 	 }

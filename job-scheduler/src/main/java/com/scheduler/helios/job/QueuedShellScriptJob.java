@@ -38,11 +38,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
         
         try {
             // Create execution request
-            JobExecutionRequest request = new JobExecutionRequest();
-            request.setJobId((Integer) dataMap.get("jobId"));
-            request.setJobName(context.getJobDetail().getKey().getName());
-            request.setJobGroup(context.getJobDetail().getKey().getGroup());
-            request.setScriptPath(dataMap.getString("scriptPath"));
+            JobExecutionRequest request = createJobExecReq(context);
             request.setQueuedTime(LocalDateTime.now());
             
             // Extract parameters
@@ -58,7 +54,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
             request.setTimeoutSeconds(getIntValue(dataMap, "timeoutSeconds", 300));
             request.setMaxRetries(getIntValue(dataMap, "maxRetries", 3));
             
-            JobExecution jobExecInfo = jobExecInfoRepository.save(createJobExecInfoEntity(request,"QUEUED"));
+            JobExecution jobExecInfo = jobExecInfoRepository.save(createJSuccessJobExecInfoEntity(request,"QUEUED",null));
             request.setExecutionId(jobExecInfo.getExecutionId());
           
             // Publish to execution queue
@@ -69,8 +65,26 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
             
         } catch (Exception e) {
             logger.error("Failed to publish job to queue: {}", jobKey, e);
+            
+            JobExecutionRequest request  = createJobExecReq(context);
+            jobExecInfoRepository.save(createFailureJobExecEntity(request,"FAILED","Error Connecting to Queue"));
+
             throw new JobExecutionException("Failed to publish job to execution queue", e);
         }
+        
+    }
+    
+    private JobExecutionRequest createJobExecReq(JobExecutionContext context ) {
+    	
+    	JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+    	
+    	JobExecutionRequest request = new JobExecutionRequest();
+        request.setJobId((Integer) dataMap.get("jobId"));
+        request.setJobName(context.getJobDetail().getKey().getName());
+        request.setJobGroup(context.getJobDetail().getKey().getGroup());
+        request.setScriptPath(dataMap.getString("scriptPath"));
+        
+        return request;
     }
         
     private boolean isInternalKey(String key) {
@@ -92,14 +106,24 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
         return defaultValue;
     }
     
-    private JobExecution createJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status) {
+    private JobExecution createJSuccessJobExecInfoEntity(JobExecutionRequest jobExecRequest,String status,String errMessage) {
     	
     	JobExecution jobExecInfo = new JobExecution();
     	jobExecInfo.setJobId(jobExecRequest.getJobId());
     	jobExecInfo.setStatus(status);
     	jobExecInfo.setQueuedStartTime(Timestamp.valueOf(jobExecRequest.getQueuedTime()));
+    	jobExecInfo.setErrorMessage(errMessage);
     	
     	return jobExecInfo;
     }
 	
+    private JobExecution createFailureJobExecEntity(JobExecutionRequest jobExecRequest,String status,String errMessage) {
+    	
+    	JobExecution jobExecInfo = new JobExecution();
+    	jobExecInfo.setJobId(jobExecRequest.getJobId());
+    	jobExecInfo.setStatus(status);
+    	jobExecInfo.setErrorMessage(errMessage);
+    	jobExecInfo.setExecEndTime(Timestamp.valueOf(LocalDateTime.now()));
+    	return jobExecInfo;
+    }
 }

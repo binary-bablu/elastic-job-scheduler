@@ -1,8 +1,6 @@
 package com.scheduler.executor.listener;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +14,6 @@ import com.rabbitmq.client.Channel;
 import com.scheduler.executor.config.RabbitMQConfig;
 import com.scheduler.executor.dto.JobExecutionRequest;
 import com.scheduler.executor.dto.JobExecutionResult;
-import com.scheduler.executor.entity.JobExecution;
-import com.scheduler.executor.repository.JobExecutionsRepository;
 import com.scheduler.executor.service.AgentHealthService;
 import com.scheduler.executor.service.JobExecutorService;
 import com.scheduler.executor.service.JobExecutorStatusService;
