@@ -40,11 +40,11 @@ No requirement for large scale infrastructure elements.
 - **PostgreSQL**: Quartz job metadata , Job definitions, Job Execution Information with agent heartbeats
 
 ## ℹ️ Job,Execution Statuses and Job,Execution status transitions
- Job Definition status : ACTIVE OR INACTIVE OR PAUSED
- Execution Status : QUEUED OR RUNNING OR FAILED OR COMPLETED
+ - Job Definition status : ACTIVE OR INACTIVE OR PAUSED
+ - Execution Status : QUEUED OR RUNNING OR FAILED OR COMPLETED
  
- Job Execution Status Transitions : QUEUED -> RUNNING -> FAILED OR COMPLETED
- Job Definition status Transition : ACTIVE -> INACTIVE -> ACTIVE  OR ACTIVE -> PAUSED -> ACTIVE
+ - Job Execution Status Transitions : QUEUED -> RUNNING -> FAILED OR COMPLETED
+ - Job Definition status Transition : ACTIVE -> INACTIVE -> ACTIVE  OR ACTIVE -> PAUSED -> ACTIVE
 ## Benefits of This Architecture
 
 ### ✅ **Massive Scalability**
