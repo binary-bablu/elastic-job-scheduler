@@ -2,7 +2,8 @@
 An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintainable.
 
 ## ℹ️ Overview
-A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
+A light weight Job scheduler which is robust, can scale horizontally,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.
+No requirement for large scale infrastructure elements. 
 ## 🌟 Highlights
 - Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
 - Follows separation of concerns architectural pattern, SOA, queue based
@@ -33,8 +34,8 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 ### 4. 🧩 **Message Queue** (RabbitMQ)
 - **Execution Queue**: Job requests from scheduler to agents
 - **Result Queue**: Execution results from agents to scheduler
-- **Retry Queue**: Failed jobs for retry with delay
-- **DLQ**: Dead letter queue for permanently failed jobs
+- **Retry Queue**: Failed jobs for retry with delay (Not implemented yet!)
+- **DLQ**: Dead letter queue for permanently failed jobs (Not implemented yet)
 ### 5. 🧩 **Storage**
 - **PostgreSQL**: Quartz job metadata , Job definitions, Job Execution Information with agent heartbeats
 
@@ -57,7 +58,7 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 ### ✅ **Fault Tolerance**
 - Jobs survive agent failures (requeued automatically)
 - Scheduler and agents are stateless (except job definitions)
-- Built-in retry mechanisms with exponential backoff
+- Can be enhanced for retry mechanisms with exponential backoff(not implemented yet)
 
 ### ✅ **Monitoring & Observability**
 - 💡More to come, ideas are brewing ☕ stay tuned ..  
