@@ -27,6 +27,7 @@ public class JobExecutionRequest {
 	private int initialDelayMs;
 	private String backOffStrategy;
 	private int multiplier;
+	private List<Integer> nonRetryableExitCodes = List.of(2, 126,-998,-999);//default if nothing provided
     
     public JobExecutionRequest() {}
     
@@ -235,4 +236,12 @@ public class JobExecutionRequest {
         
         return delay;
     }
+
+	public List<Integer> getNonRetryableExitCodes() {
+		return nonRetryableExitCodes;
+	}
+
+	public void setNonRetryableExitCodes(List<Integer> nonRetryableExitCodes) {
+		this.nonRetryableExitCodes = nonRetryableExitCodes;
+	}
 }

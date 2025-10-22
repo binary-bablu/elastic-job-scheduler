@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.scheduler.helios.utils.IntegerListToStringConverter;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -49,6 +52,10 @@ public class JobScheduleDefinition {
     
     @Column(name="timeout")
 	private Integer timeout;
+    
+    @Column(name="non_retryable_exit_codes")
+    @Convert(converter = IntegerListToStringConverter.class)
+	private List<Integer> nonRetryableExitCodes;
 
     @OneToMany(mappedBy = "jobScheduleDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
@@ -193,5 +200,13 @@ public class JobScheduleDefinition {
 
 	public void setTimeout(Integer timeout) {
 		this.timeout = timeout;
+	}
+	
+	public List<Integer> getNonRetryableExitCodes() {
+		return nonRetryableExitCodes;
+	}
+
+	public void setNonRetryableExitCodes(List<Integer> nonRetryableExitCodes) {
+		this.nonRetryableExitCodes = nonRetryableExitCodes;
 	}
 }

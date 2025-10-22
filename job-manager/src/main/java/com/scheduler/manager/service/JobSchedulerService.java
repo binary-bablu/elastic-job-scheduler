@@ -70,7 +70,8 @@ public class JobSchedulerService {
             jobInfo.addParameter(entry.getKey(), entry.getValue());
         }
         jobInfo.setDescription(jobRequest.getDescription());
-
+        jobInfo.setNonRetryableExitCodes(jobRequest.getRetryConfig().getNonRetryableExitCodes());
+        
         jobInfo = jobInfoRepository.save(jobInfo);
         
         scheduleQuartzJob(jobInfo);
@@ -106,11 +107,13 @@ public class JobSchedulerService {
         jobInfo.setRetryInitialDelayInMs(jobRequest.getRetryConfig().getInitialDelayMs());
         jobInfo.setRetryStrategy(jobRequest.getRetryConfig().getBackOffStrategy());
         jobInfo.setTimeout(jobRequest.getTimeout() !=null ? jobRequest.getTimeout() : 300);  
-        
+        jobInfo.setDescription(jobRequest.getDescription());
+        jobInfo.setRetryMultiplier(jobRequest.getRetryConfig().getMultiplier());
         for (Entry<String, String> entry : jobRequest.getParameters().entrySet()) {
             jobInfo.addParameter(entry.getKey(), entry.getValue());
         }
-
+        jobInfo.setNonRetryableExitCodes(jobRequest.getRetryConfig().getNonRetryableExitCodes());
+        
         jobInfo = jobInfoRepository.save(jobInfo);
         scheduleQuartzJob(jobInfo);
         

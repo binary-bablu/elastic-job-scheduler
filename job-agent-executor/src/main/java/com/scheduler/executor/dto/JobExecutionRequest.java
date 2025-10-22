@@ -29,7 +29,7 @@ public class JobExecutionRequest {
 	private int multiplier;
 	
 	private LocalDateTime startTime;
-	private List<Integer> nonRetryableExitCodes = List.of(2, 126,-998,-999);
+	private List<Integer> nonRetryableExitCodes = List.of(2, 126,-998,-999);//default if nothing is provided
     
     public JobExecutionRequest() {}
     

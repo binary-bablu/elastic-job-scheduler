@@ -8,7 +8,7 @@ public class RetryConfig {
      private String backOffStrategy = "FIXED";//Default
      private int initialDelayMs = 60000;  // 1 minute default
      private int multiplier = 2;
-     private List<Integer> nonRetryableExitCodes = List.of(2, 126, 127, -998, -999);
+     private List<Integer> nonRetryableExitCodes = List.of(2, 126, 127, -998, -999);//default if nothing is provided
      
 	 public int getMaxAttempts() {
 		 return maxAttempts;
