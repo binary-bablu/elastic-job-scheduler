@@ -67,9 +67,11 @@ No requirement for large scale infrastructure elements.
 - Scheduler and agents are stateless (except job definitions)
 - Performs re-try mechanism with strategies like FIXED, LINEAR, EXPONENTIAL back-off (recently introduced 🚀)
 
-### ✅ **Monitoring & Observability**
-- 💡More to come, ideas are brewing ☕ stay tuned ..  
-
+### ✅ **Monitoring & Observability & Timeout **
+- 💡More to come, ideas are brewing ☕ stay tuned ..
+### ✅ **Job Dependencies**
+- 💡More to come, ideas are brewing ☕ stay tuned ..
+  
 ## 📋 Prerequisites for running  
 a) Have a PostgreSQL Database Instance configured  
 b) Have a RabbitMQ installation done  
@@ -89,8 +91,15 @@ curl -X POST http://localhost:8080/api/jobs \
     "jobGroup": "maintenance", 
     "cronExpression": "0/30 * * * * ?",
     "scriptPath": "/Users/mylaptop/test.sh",
-    "parameters": {"database": "prod"}
-}'  
+    "parameters": {"database": "prod"},
+    "description" :"Daily backup job",
+	 "retryConfig": {
+        "maxAttempts": 2,
+        "backOffStrategy": "FIXED",
+        "initialDelayMs": 30000,
+        "nonRetryableExitCodes": [2, 127, 130, 143]
+    }
+}'
 d) Agent could be run from command line like below :-  
 *mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dexecutor.agent.id=123"*    
 
