@@ -108,7 +108,7 @@ e) Similar to above multiple job-scheduler's can be run on different port's
 
 ### ✍️ Authors
 Engineer , Management Lead, Works for a bank - 
-"Managing minds and machines — all before the next release."
+"Managing minds,machines and code — all before the next release."
 
 Have questions or feedback? I'd love to hear from you!  
 📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
