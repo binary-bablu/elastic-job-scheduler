@@ -46,7 +46,9 @@ public class JobScheduleDefinition {
     
     @Column(name="status")
     private String status;
-
+    
+    @Column(name="timeout")
+	private Integer timeout;
 
     @OneToMany(mappedBy = "jobScheduleDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
@@ -184,5 +186,12 @@ public class JobScheduleDefinition {
 	public void setRetryMultiplier(Integer retryMultiplier) {
 		this.retryMultiplier = retryMultiplier;
 	}
-    
+
+	public Integer getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(Integer timeout) {
+		this.timeout = timeout;
+	}
 }

@@ -65,7 +65,7 @@ public class JobSchedulerService {
         jobInfo.setRetryStrategy(jobRequest.getRetryConfig().getBackOffStrategy());    
         jobInfo.setRetryMultiplier(jobRequest.getRetryConfig().getMultiplier());
         jobInfo.setCreatedAt(LocalDateTime.now());
-        
+        jobInfo.setTimeout(jobRequest.getTimeout() !=null ? jobRequest.getTimeout() : 300);      
         for (Entry<String, String> entry : jobRequest.getParameters().entrySet()) {
             jobInfo.addParameter(entry.getKey(), entry.getValue());
         }
@@ -105,6 +105,7 @@ public class JobSchedulerService {
         jobInfo.setRetryMaxAttempts(jobRequest.getRetryConfig().getMaxAttempts());
         jobInfo.setRetryInitialDelayInMs(jobRequest.getRetryConfig().getInitialDelayMs());
         jobInfo.setRetryStrategy(jobRequest.getRetryConfig().getBackOffStrategy());
+        jobInfo.setTimeout(jobRequest.getTimeout() !=null ? jobRequest.getTimeout() : 300);  
         
         for (Entry<String, String> entry : jobRequest.getParameters().entrySet()) {
             jobInfo.addParameter(entry.getKey(), entry.getValue());

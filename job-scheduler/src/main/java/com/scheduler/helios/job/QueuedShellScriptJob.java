@@ -84,6 +84,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
         request.setBackOffStrategy(jobInfo.getRetryStrategy());
         request.setInitialDelayMs(jobInfo.getRetryInitialDelayInMs());
         request.setQueuedTime(LocalDateTime.now());
+        request.setTimeoutSeconds(jobInfo.getTimeout());
         
         // Extract parameters
         Map<String, String> parameters = new HashMap<>();

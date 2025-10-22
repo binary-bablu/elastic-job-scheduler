@@ -17,7 +17,7 @@ public class JobExecutionRequest {
     private Map<String, String> parameters;
     private LocalDateTime scheduledTime;
     private Integer executionId; // Unique execution ID
-    private int timeoutSeconds = 300;
+    private int timeoutSeconds = 300;//default 5 mins
     private LocalDateTime queuedTime;
     private int currentRetryCount = 0;
     private String isRetryAttempt;

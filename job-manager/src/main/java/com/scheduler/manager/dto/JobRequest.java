@@ -16,6 +16,8 @@ public class JobRequest {
     
     private String description;
     
+    private Integer timeout;//seconds
+    
     // Per-job retry configuration
     private RetryConfig retryConfig;
     
@@ -71,5 +73,13 @@ public class JobRequest {
 
 	public void setRetryConfig(RetryConfig retryConfig) {
 		this.retryConfig = retryConfig;
+	}
+
+	public Integer getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(Integer timeout) {
+		this.timeout = timeout;
 	}
 }
