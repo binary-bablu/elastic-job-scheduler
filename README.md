@@ -5,11 +5,11 @@ An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and mai
 A light weight Job scheduler which is robust, can scale horizontally,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.
 No requirement for large scale infrastructure elements. 
 ## 🌟 Highlights
-- Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
-- Follows separation of concerns architectural pattern, SOA, queue based
+- API Centric,Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features (monitoring, alerting, email, access control ect)
+- Follows separation of concerns architectural pattern, SOA, queue based, easy to setup and get it up and running
 - Can be hosted on Cloud , on-prem, scales horizontally
 - Better alternative for large clunky open source , cost heavy commercial ones
-- API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
+- Supports Re-try with strategies like - FIXED interval (retry at fixed interval) , LINEAR (initial delay * attemp number ),EXPONENTIAL (initialDelayMs * Math.pow(multiplier, retryAttempt - 1) - [Recently Introduced 🚀]
 
 ## 🏗️ Architecture Diagram
    <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
@@ -31,11 +31,12 @@ No requirement for large scale infrastructure elements.
 - Execute shell scripts with parameters
 - Publish results back to scheduler
 - Can run on different machines and Auto-scaling friendly
+- Carries out re-tries based on Re-Try strategy provided during job creation (recently introduced 🚀)
 ### 4. 🧩 **Message Queue** (RabbitMQ)
 - **Execution Queue**: Job requests from scheduler to agents
 - **Result Queue**: Execution results from agents to scheduler
-- **Retry Queue**: Failed jobs for retry with delay (Not implemented yet!)
-- **DLQ**: Dead letter queue for permanently failed jobs (Not implemented yet)
+- **Retry Queue**: Failed jobs for retry with delay (recently introduced 🚀)
+- **DLQ**: Dead letter queue for permanently failed jobs (recently introduced 🚀)
 ### 5. 🧩 **Storage**
 - **PostgreSQL**: Quartz job metadata , Job definitions, Job Execution Information with agent heartbeats
 
@@ -43,7 +44,7 @@ No requirement for large scale infrastructure elements.
  - Job Definition status : ACTIVE OR INACTIVE OR PAUSED
  - Execution Status : QUEUED OR RUNNING OR FAILED OR COMPLETED
  
- - Job Execution Status Transitions : QUEUED -> RUNNING -> FAILED OR COMPLETED
+ - Job Execution Status Transitions : QUEUED -> RUNNING -> FAILED OR COMPLETED ->RE_TRY_QUEUED
  - Job Definition status Transition : ACTIVE -> INACTIVE -> ACTIVE  OR ACTIVE -> PAUSED -> ACTIVE
 ## Benefits of This Architecture
 
@@ -64,7 +65,7 @@ No requirement for large scale infrastructure elements.
 ### ✅ **Fault Tolerance**
 - Jobs survive agent failures (requeued automatically)
 - Scheduler and agents are stateless (except job definitions)
-- Can be enhanced for retry mechanisms with exponential backoff(not implemented yet)
+- Performs re-try mechanism with strategies like FIXED, LINEAR, EXPONENTIAL back-off (recently introduced 🚀)
 
 ### ✅ **Monitoring & Observability**
 - 💡More to come, ideas are brewing ☕ stay tuned ..  
