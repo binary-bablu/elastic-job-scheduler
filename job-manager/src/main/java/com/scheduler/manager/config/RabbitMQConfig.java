@@ -22,11 +22,13 @@ public class RabbitMQConfig {
     // Exchange Names
     public static final String JOB_EXCHANGE = "job.exchange";
     public static final String JOB_RETRY_EXCHANGE = "job.retry.exchange";
+    public static final String JOB_DLQ_EXCHANGE = "job.dlq.exchange";
     
     // Routing Keys
     public static final String JOB_EXECUTION_ROUTING_KEY = "job.execute";
     public static final String JOB_RESULT_ROUTING_KEY = "job.result";
     public static final String JOB_RETRY_ROUTING_KEY = "job.retry";
+    public static final String JOB_DLQ_ROUTING_KEY = "job.dlq";
     
     @Bean
     public MessageConverter jsonMessageConverter() {
@@ -60,6 +62,12 @@ public class RabbitMQConfig {
     @Bean
     public DirectExchange jobRetryExchange() {
         return new DirectExchange(JOB_RETRY_EXCHANGE, true, false);
+    }
+    
+ // DLQ exchange 
+    @Bean
+    public DirectExchange jobDlqExchange() {
+        return new DirectExchange(JOB_DLQ_EXCHANGE, true, false);
     }
     
     // Job execution queue
@@ -113,5 +121,12 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(jobRetryQueue())
                 .to(jobRetryExchange())
                 .with(JOB_RETRY_ROUTING_KEY);
+    }
+    
+    @Bean
+    public Binding jobDlqBinding(Queue jobDlq, DirectExchange jobDlqExchange) {
+        return BindingBuilder.bind(jobDlq)
+                .to(jobDlqExchange)
+                .with(JOB_DLQ_ROUTING_KEY);
     }
 }

@@ -59,6 +59,17 @@ public class JobScheduleDefinition {
         param.setJobScheduleDefinition(this);
         this.parameters.add(param);
     }
+    @Column(name="retry_max_attempts")
+    private Integer retryMaxAttempts;
+	
+	@Column(name="retry_initial_delay_ms")
+    private Integer retryInitialDelayInMs;
+	
+	@Column(name="retry_strategy")
+    private String retryStrategy;
+	
+	@Column(name="retry_multiplier")
+    private Integer retryMultiplier;
 
 	public Integer getId() {
 		return id;
@@ -132,6 +143,46 @@ public class JobScheduleDefinition {
 
 	public void setScriptPath(String scriptPath) {
 		this.scriptPath = scriptPath;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Integer getRetryMaxAttempts() {
+		return retryMaxAttempts;
+	}
+
+	public void setRetryMaxAttempts(Integer retryMaxAttempts) {
+		this.retryMaxAttempts = retryMaxAttempts;
+	}
+
+	public Integer getRetryInitialDelayInMs() {
+		return retryInitialDelayInMs;
+	}
+
+	public void setRetryInitialDelayInMs(Integer retryInitialDelayInMs) {
+		this.retryInitialDelayInMs = retryInitialDelayInMs;
+	}
+
+	public String getRetryStrategy() {
+		return retryStrategy;
+	}
+
+	public void setRetryStrategy(String retryStrategy) {
+		this.retryStrategy = retryStrategy;
+	}
+
+	public Integer getRetryMultiplier() {
+		return retryMultiplier;
+	}
+
+	public void setRetryMultiplier(Integer retryMultiplier) {
+		this.retryMultiplier = retryMultiplier;
 	}
     
 }

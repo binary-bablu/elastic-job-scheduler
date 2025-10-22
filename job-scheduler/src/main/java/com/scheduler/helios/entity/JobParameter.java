@@ -21,7 +21,7 @@ public class JobParameter {
     private String paramValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_info_id")
+    @JoinColumn(name = "job_id")
     private JobScheduleDefinition jobScheduleDefinition;
 
 	public Integer getId() {

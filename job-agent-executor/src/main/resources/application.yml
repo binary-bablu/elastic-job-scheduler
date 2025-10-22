@@ -16,7 +16,7 @@ spring:
       
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
 
   # RabbitMQ Configuration
@@ -34,3 +34,5 @@ logging:
      org.springframework.amqp: INFO
      org.springframework.jdbc.core: DEBUG
      org.springframework.jdbc.datasource: DEBUG
+     org.hibernate.SQL: DEBUG
+     org.hibernate.type.descriptor.sql.BasicBinder: TRACE

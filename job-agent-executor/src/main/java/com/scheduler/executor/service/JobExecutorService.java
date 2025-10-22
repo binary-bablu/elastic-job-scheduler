@@ -48,6 +48,12 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             processBuilder.redirectErrorStream(true);
             
+            // Set environment variables
+            Map<String, String> environment = processBuilder.environment();
+            environment.put("JOB_ID", String.valueOf(request.getJobId()));
+            environment.put("EXECUTION_ID", String.valueOf(request.getExecutionId()));
+            environment.put("AGENT_ID", String.valueOf(agentId));
+            
             // Start process
             Process process = processBuilder.start();
             
@@ -69,6 +75,8 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
                 result.setSuccess(false);
                 result.setErrorMessage("Script execution timed out after " + request.getTimeoutSeconds() + " seconds");
                 result.setExitCode(-1);
+                logger.error(" Job {} with execution id : {} - {} terminated due to Timing Out",request.getJobId(),
+                		request.getExecutionId());
             } else {
                 int exitCode = process.exitValue();
                 result.setExitCode(exitCode);
@@ -77,15 +85,19 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
                 
                 if (exitCode != 0) {
                     result.setErrorMessage("Script failed with exit code: " + exitCode);
+                }else {
+                	 logger.info("Job {} with execution id completed: {} - Success: {} in {}ms", 
+                             request.getJobId(),request.getExecutionId(), result.isSuccess(), result.getDurationMs());
                 }
             }
             
         } catch (IOException | InterruptedException e) {
           
-        	logger.error("Error executing job execution id : {} - {}", request.getExecutionId(), e.getMessage(), e);
+        	logger.error("Error executing job {} with execution id : {} - {}",request.getJobId(), request.getExecutionId(),
+        			e.getMessage(), e);
             result.setSuccess(false);
             result.setErrorMessage("Execution error: " + e.getMessage());
-            result.setExitCode(-2);
+            result.setExitCode(-12);
             
             if (e instanceof InterruptedException) {
                 Thread.currentThread().interrupt();
@@ -95,9 +107,6 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
         LocalDateTime endTime = LocalDateTime.now();
         result.setEndTime(endTime);
         result.setDurationMs(ChronoUnit.MILLIS.between(result.getStartTime(), endTime));
-        
-        logger.info("Job execution id completed: {} - Success: {} in {}ms", 
-                   request.getExecutionId(), result.isSuccess(), result.getDurationMs());
         
         return result;
     }

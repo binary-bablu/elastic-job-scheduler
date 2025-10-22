@@ -27,7 +27,7 @@ public class JobExecution {
     @Column(name="status")
     private String status;
 	
-    @Column(name="queued_start_time")
+	@Column(name="queued_start_time")
     private Timestamp queuedStartTime;
     
     @Column(name="queued_end_time")
@@ -38,11 +38,22 @@ public class JobExecution {
     
     @Column(name="exec_end_time")
     private Timestamp execEndTime;
-    
+   
     @Column(name="error_message")
     private String errorMessage;
-	
-    // Constructors
+    
+    @Column(name="retry_attempt_number")
+    private int retryAttemptNumber;
+    
+    @Column(name="is_retry_attempt")
+    private String isRetryAttempt;//values YES Or NO
+    
+    @Column(name="output_message")
+    private String outputMessage;
+    
+    @Column(name="sent_to_dlq")
+    private String sentToDlq;
+        
     public JobExecution() {}
 
 	public String getStatus() {
@@ -52,7 +63,15 @@ public class JobExecution {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public Integer getExecutionId() {
+		return executionId;
+	}
 
+	public void setExecutionId(Integer executionId) {
+		this.executionId = executionId;
+	}
+	
 	public Timestamp getQueuedStartTime() {
 		return queuedStartTime;
 	}
@@ -85,14 +104,6 @@ public class JobExecution {
 		this.execEndTime = execEndTime;
 	}
 
-	public Integer getExecutionId() {
-		return executionId;
-	}
-
-	public void setExecutionId(Integer executionId) {
-		this.executionId = executionId;
-	}
-
 	public Integer getJobId() {
 		return jobId;
 	}
@@ -100,12 +111,44 @@ public class JobExecution {
 	public void setJobId(Integer jobId) {
 		this.jobId = jobId;
 	}
-
+	
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	public int getRetryAttemptNumber() {
+		return retryAttemptNumber;
+	}
+
+	public void setRetryAttemptNumber(int retryAttemptNumber) {
+		this.retryAttemptNumber = retryAttemptNumber;
+	}
+
+	public String getIsRetryAttempt() {
+		return isRetryAttempt;
+	}
+
+	public void setIsRetryAttempt(String isRetryAttempt) {
+		this.isRetryAttempt = isRetryAttempt;
+	}
+
+	public String getOutputMessage() {
+		return outputMessage;
+	}
+
+	public void setOutputMessage(String outputMessage) {
+		this.outputMessage = outputMessage;
+	}
+
+	public String getSentToDlq() {
+		return sentToDlq;
+	}
+
+	public void setSentToDlq(String sentToDlq) {
+		this.sentToDlq = sentToDlq;
 	}
 }

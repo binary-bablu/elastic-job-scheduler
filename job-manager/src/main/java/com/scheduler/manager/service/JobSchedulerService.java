@@ -32,7 +32,7 @@ import com.scheduler.helios.job.QueuedShellScriptJob;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
 import com.scheduler.manager.entity.JobScheduleDefinition;
-import com.scheduler.manager.repository.JobInfoRepository;
+import com.scheduler.manager.repository.JobSchedDefRepository;
 
 @Service
 public class JobSchedulerService {
@@ -43,7 +43,7 @@ public class JobSchedulerService {
     private Scheduler scheduler;
 
     @Autowired
-    private JobInfoRepository jobInfoRepository;
+    private JobSchedDefRepository jobInfoRepository;
 
     @Transactional
     public JobResponse createJob(JobRequest jobRequest) throws JobAlreadyExistsException,SchedulerException {
@@ -60,6 +60,11 @@ public class JobSchedulerService {
         jobInfo.setCronExpression(jobRequest.getCronExpression());
         jobInfo.setScriptPath(jobRequest.getScriptPath());
         jobInfo.setStatus("ACTIVE");
+        jobInfo.setRetryMaxAttempts(jobRequest.getRetryConfig().getMaxAttempts());
+        jobInfo.setRetryInitialDelayInMs(jobRequest.getRetryConfig().getInitialDelayMs());
+        jobInfo.setRetryStrategy(jobRequest.getRetryConfig().getBackOffStrategy());    
+        jobInfo.setRetryMultiplier(jobRequest.getRetryConfig().getMultiplier());
+        jobInfo.setCreatedAt(LocalDateTime.now());
         
         for (Entry<String, String> entry : jobRequest.getParameters().entrySet()) {
             jobInfo.addParameter(entry.getKey(), entry.getValue());
@@ -97,6 +102,9 @@ public class JobSchedulerService {
         jobInfo.setJobGroup(jobRequest.getJobGroup());
         jobInfo.setCronExpression(jobRequest.getCronExpression());
         jobInfo.setScriptPath(jobRequest.getScriptPath());
+        jobInfo.setRetryMaxAttempts(jobRequest.getRetryConfig().getMaxAttempts());
+        jobInfo.setRetryInitialDelayInMs(jobRequest.getRetryConfig().getInitialDelayMs());
+        jobInfo.setRetryStrategy(jobRequest.getRetryConfig().getBackOffStrategy());
         
         for (Entry<String, String> entry : jobRequest.getParameters().entrySet()) {
             jobInfo.addParameter(entry.getKey(), entry.getValue());

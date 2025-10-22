@@ -46,10 +46,22 @@ public class JobScheduleDefinition {
     
     @Column(name="status")
     private String status;
+    
+    @Column(name="retry_max_attempts")
+    private Integer retryMaxAttempts;
+	
+	@Column(name="retry_initial_delay_ms")
+    private Integer retryInitialDelayInMs;
+	
+	@Column(name="retry_strategy")
+    private String retryStrategy;
+	
+	@Column(name="retry_multiplier")
+    private Integer retryMultiplier;
 
     @OneToMany(mappedBy = "jobScheduleDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
-
+   
     // Add/remove helpers
     public void addParameter(String key, String value) {
         JobParameter param = new JobParameter();
@@ -121,7 +133,6 @@ public class JobScheduleDefinition {
 		for(JobParameter jobParam : this.parameters) {
 			paramMap.put(jobParam.getParamKey(), jobParam.getParamValue());
 		}
-		
 		return paramMap;
 	}
 
@@ -139,6 +150,42 @@ public class JobScheduleDefinition {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Integer getRetryMaxAttempts() {
+		return retryMaxAttempts;
+	}
+
+	public void setRetryMaxAttempts(Integer retryMaxAttempts) {
+		this.retryMaxAttempts = retryMaxAttempts;
+	}
+
+	public Integer getRetryInitialDelayInMs() {
+		return retryInitialDelayInMs;
+	}
+
+	public void setRetryInitialDelayInMs(Integer retryInitialDelayInMs) {
+		this.retryInitialDelayInMs = retryInitialDelayInMs;
+	}
+
+	public String getRetryStrategy() {
+		return retryStrategy;
+	}
+
+	public void setRetryStrategy(String retryStrategy) {
+		this.retryStrategy = retryStrategy;
+	}
+
+	public Integer getRetryMultiplier() {
+		return retryMultiplier;
+	}
+
+	public void setRetryMultiplier(Integer retryMultiplier) {
+		this.retryMultiplier = retryMultiplier;
+	}
+
+	public void setParameters(List<JobParameter> parameters) {
+		this.parameters = parameters;
 	}
     
 }

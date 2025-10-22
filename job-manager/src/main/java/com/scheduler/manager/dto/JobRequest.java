@@ -16,9 +16,12 @@ public class JobRequest {
     
     private String description;
     
+    // Per-job retry configuration
+    private RetryConfig retryConfig;
+    
     // Constructors
     public JobRequest() {}
-
+    
     // Getters and Setters
     public String getJobName() { return jobName; }
     public void setJobName(String jobName) { this.jobName = jobName; }
@@ -38,4 +41,35 @@ public class JobRequest {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
     
+    /**
+     * Calculate retry delay based on current attempt and strategy
+     */
+    public long calculateDelay(int retryAttempt) {
+        long delay;
+        
+        switch (retryConfig.getBackOffStrategy()) {
+            case "FIXED":
+                delay = retryConfig.getInitialDelayMs();
+                break;
+                
+            case "LINEAR":
+                delay = retryConfig.getInitialDelayMs() * retryAttempt;
+                break;
+                
+            case "EXPONENTIAL":
+            default:
+                delay = (long) (retryConfig.getInitialDelayMs() * Math.pow(retryConfig.getMultiplier(), retryAttempt - 1));
+                break;
+        }
+        
+        return delay;
+    }
+
+	public RetryConfig getRetryConfig() {
+		return retryConfig;
+	}
+
+	public void setRetryConfig(RetryConfig retryConfig) {
+		this.retryConfig = retryConfig;
+	}
 }

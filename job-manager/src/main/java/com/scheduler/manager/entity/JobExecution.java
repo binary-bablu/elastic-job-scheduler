@@ -1,6 +1,5 @@
 package com.scheduler.manager.entity;
 
-
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -38,8 +37,22 @@ public class JobExecution {
     
     @Column(name="exec_end_time")
     private Timestamp execEndTime;
-	
-    // Constructors
+    
+    @Column(name="error_message")
+    private String errorMessage;
+    
+    @Column(name="retry_attempt_number")
+    private int retryAttemptNumber;
+    
+    @Column(name="is_retry_attemp")
+    private String isRetryAttempt;//values YES Or NO
+    
+    @Column(name="output_message")
+    private String outputMessage;
+    
+    @Column(name="sent_to_dlq")
+    private String sentToDlq;
+    
     public JobExecution() {}
 
 	public String getStatus() {
@@ -98,4 +111,43 @@ public class JobExecution {
 		this.jobId = jobId;
 	}
 
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public int getRetryAttemptNumber() {
+		return retryAttemptNumber;
+	}
+
+	public void setRetryAttemptNumber(int retryAttemptNumber) {
+		this.retryAttemptNumber = retryAttemptNumber;
+	}
+
+	public String getIsRetryAttempt() {
+		return isRetryAttempt;
+	}
+
+	public void setIsRetryAttempt(String isRetryAttempt) {
+		this.isRetryAttempt = isRetryAttempt;
+	}
+
+	public String getOutputMessage() {
+		return outputMessage;
+	}
+
+	public void setOutputMessage(String outputMessage) {
+		this.outputMessage = outputMessage;
+	}
+
+	public String getSentToDlq() {
+		return sentToDlq;
+	}
+
+	public void setSentToDlq(String sentToDlq) {
+		this.sentToDlq = sentToDlq;
+	}
 }
