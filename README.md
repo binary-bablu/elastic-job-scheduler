@@ -67,9 +67,9 @@ No requirement for large scale infrastructure elements.
 - Scheduler and agents are stateless (except job definitions)
 - Performs re-try mechanism with strategies like FIXED, LINEAR, EXPONENTIAL back-off (recently introduced 🚀)
 
-### ✅ **Monitoring & Observability & Timeout **
+### ✅ **Monitoring & Observability & Timeout ** ✨
 - 💡More to come, ideas are brewing ☕ stay tuned ..
-### ✅ **Job Dependencies**
+### ✅ **Job Dependencies** ✨
 - 💡More to come, ideas are brewing ☕ stay tuned ..
   
 ## 📋 Prerequisites for running  
