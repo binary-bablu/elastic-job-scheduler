@@ -26,12 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.scheduler.exceptions.JobAlreadyExistsException;
-import com.scheduler.exceptions.JobNotFoundException;
 import com.scheduler.helios.job.QueuedShellScriptJob;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
 import com.scheduler.manager.entity.JobScheduleDefinition;
+import com.scheduler.manager.exception.JobAlreadyExistsException;
+import com.scheduler.manager.exception.JobNotFoundException;
 import com.scheduler.manager.repository.JobSchedDefRepository;
 
 @Service

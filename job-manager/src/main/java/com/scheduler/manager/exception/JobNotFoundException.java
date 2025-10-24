@@ -1,4 +1,4 @@
-package com.scheduler.helios.exceptions;
+package com.scheduler.manager.exception;
 
 public class JobNotFoundException extends Throwable {
 	

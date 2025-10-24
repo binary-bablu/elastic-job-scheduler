@@ -1,4 +1,4 @@
-package com.scheduler.exceptions;
+package com.scheduler.manager.exception;
 
 public class JobAlreadyExistsException extends Throwable {
 	

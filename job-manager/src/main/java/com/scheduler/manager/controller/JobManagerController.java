@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scheduler.exceptions.JobAlreadyExistsException;
-import com.scheduler.exceptions.JobNotFoundException;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
+import com.scheduler.manager.exception.JobAlreadyExistsException;
+import com.scheduler.manager.exception.JobNotFoundException;
 import com.scheduler.manager.service.JobSchedulerService;
 
 import jakarta.validation.Valid;

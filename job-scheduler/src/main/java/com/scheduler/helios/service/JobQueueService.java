@@ -29,7 +29,7 @@ public class JobQueueService {
             );
             
             logger.info("Published job execution request: {} for job: {}", 
-            		request.getJobId(),request.getExecutionId());
+            		request.getExecutionId(),request.getJobId());
                        
         } catch (Exception e) {
             logger.error("Failed to publish job execution request: {}", request.getExecutionId(), e);
