@@ -2,12 +2,9 @@ package com.scheduler.manager.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,40 +13,35 @@ public class JobDependency {
     
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "job_dependency_id")
+	@Column(name = "id")
     private Integer jobDependencyId;
 	
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_job_id", nullable = false)
-    private JobScheduleDefinition parentJob;
+	@Column(name = "parent_job_id")
+    private Integer parentJobId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dependent_job_id", nullable = false)
-    private JobScheduleDefinition dependentJob;
+	@Column(name = "dependent_job_id")
+    private Integer dependentJobId;
     
-    @Column(name = "dependency_type", nullable = false)
+    @Column(name = "dependency_type")
     private String dependencyType;
     
-    @Column(name = "condition_expression", length = 500)
-    private String conditionExpression; // Optional condition for dependency
-    
-    @Column(name = "is_active")
-    private Boolean isActive = true;
+    @Column(name = "enabled")
+    private Boolean enabled = true;
 
-	public JobScheduleDefinition getParentJob() {
-		return parentJob;
+	public Integer getParentJobId() {
+		return parentJobId;
 	}
 
-	public void setParentJob(JobScheduleDefinition parentJob) {
-		this.parentJob = parentJob;
+	public void setParentJobId(Integer parentJobId) {
+		this.parentJobId = parentJobId;
 	}
 
-	public JobScheduleDefinition getDependentJob() {
-		return dependentJob;
+	public Integer getDependentJobId() {
+		return dependentJobId;
 	}
 
-	public void setDependentJob(JobScheduleDefinition dependentJob) {
-		this.dependentJob = dependentJob;
+	public void setDependentJobId(Integer dependentJobId) {
+		this.dependentJobId = dependentJobId;
 	}
 
 	public String getDependencyType() {
@@ -59,21 +51,13 @@ public class JobDependency {
 	public void setDependencyType(String dependencyType) {
 		this.dependencyType = dependencyType;
 	}
-
-	public String getConditionExpression() {
-		return conditionExpression;
+	
+	public Boolean getEnabled() {
+		return enabled;
 	}
 
-	public void setConditionExpression(String conditionExpression) {
-		this.conditionExpression = conditionExpression;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Integer getJobDependencyId() {

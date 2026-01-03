@@ -32,7 +32,7 @@ import com.scheduler.manager.dto.JobResponse;
 import com.scheduler.manager.entity.JobScheduleDefinition;
 import com.scheduler.manager.exception.JobAlreadyExistsException;
 import com.scheduler.manager.exception.JobNotFoundException;
-import com.scheduler.manager.repository.JobSchedDefRepository;
+import com.scheduler.manager.repository.JobInfoRepository;
 
 @Service
 public class JobSchedulerService {
@@ -43,7 +43,7 @@ public class JobSchedulerService {
     private Scheduler scheduler;
 
     @Autowired
-    private JobSchedDefRepository jobInfoRepository;
+    private JobInfoRepository jobInfoRepository;
 
     @Transactional
     public JobResponse createJob(JobRequest jobRequest) throws JobAlreadyExistsException,SchedulerException {

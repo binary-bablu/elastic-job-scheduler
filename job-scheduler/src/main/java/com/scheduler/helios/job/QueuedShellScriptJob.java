@@ -20,7 +20,7 @@ import com.scheduler.helios.dto.JobExecutionRequest;
 import com.scheduler.helios.entity.JobExecution;
 import com.scheduler.helios.entity.JobScheduleDefinition;
 import com.scheduler.helios.repository.JobExecutionsRepository;
-import com.scheduler.helios.repository.JobSchedDefRepository;
+import com.scheduler.helios.repository.JobInfoRepository;
 import com.scheduler.helios.service.JobQueueService;
 
 @Component
@@ -36,7 +36,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
     private JobExecutionsRepository jobExecInfoRepository;
     
     @Autowired
-    private JobSchedDefRepository jobInfoRepository;
+    private JobInfoRepository jobInfoRepository;
     
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

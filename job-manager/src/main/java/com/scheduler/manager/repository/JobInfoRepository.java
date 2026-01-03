@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.scheduler.manager.entity.JobScheduleDefinition;
 
 @Repository
-public interface JobSchedDefRepository extends JpaRepository<JobScheduleDefinition, Integer> {
+public interface JobInfoRepository extends JpaRepository<JobScheduleDefinition, Integer> {
 	
     Optional<JobScheduleDefinition> findByJobNameAndJobGroup(String jobName, String jobGroup);
     boolean existsByJobNameAndJobGroup(String jobName, String jobGroup);
