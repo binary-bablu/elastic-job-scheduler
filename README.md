@@ -83,6 +83,27 @@ curl -X POST http://localhost:8080/api/jobs \
     "scriptPath": "/Users/mylaptop/test.sh",
     "parameters": {"database": "prod"}
 }'  
+
+A sample with Re-try
+
+
+curl -X POST http://localhost:8080/api/jobs \
+-H "Content-Type: application/json" \
+-d '{
+    "jobName": "daily-backup-1",
+    "jobGroup": "maintenance", 
+    "cronExpression": "0/30 * * * * ?",
+    "scriptPath": "/Users/test_laptop/test1.sh",
+    "parameters": {"database": "prod"},
+    "description" :"Daily backup job",
+	 "retryConfig": {
+        "maxAttempts": 2,
+        "backOffStrategy": "FIXED",
+        "initialDelayMs": 30000,
+        "nonRetryableExitCodes": [2, 126, 130, 143]
+    }
+}'
+
 d) Agent could be run from command line like below :-  
 *mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dexecutor.agent.id=123"*    
 
