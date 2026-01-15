@@ -72,7 +72,8 @@ d) Run Quartz table.sql script from Quartz github for postgresql (upto you if yo
 a) Have the repo git cloned or forked for your need(s)  
 b) Import the repo in your favourite editor (typically Eclipse or IntelliJ)  
 c) Run the job-manager module  
-Sample Job Creation Request :-  
+
+<u>Sample Job Creation Request :-  </u>
 
 curl -X POST http://localhost:8080/api/jobs \
 -H "Content-Type: application/json" \
@@ -84,7 +85,7 @@ curl -X POST http://localhost:8080/api/jobs \
     "parameters": {"database": "prod"}
 }'  
 
-A sample with Re-try
+<u>A sample with Re-try</u>
 
 
 curl -X POST http://localhost:8080/api/jobs \
