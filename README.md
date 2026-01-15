@@ -73,7 +73,7 @@ a) Have the repo git cloned or forked for your need(s)
 b) Import the repo in your favourite editor (typically Eclipse or IntelliJ)  
 c) Run the job-manager module  
 
-- 🧠 **Simple Sample Job Creatiion Requeest :-**:
+- 🧠 **Simple Sample Job Creatiion Request :-**:
 
 curl -X POST http://localhost:8080/api/jobs \
 -H "Content-Type: application/json" \
@@ -85,7 +85,7 @@ curl -X POST http://localhost:8080/api/jobs \
     "parameters": {"database": "prod"}
 }'  
 
-- 🧠 **Sample Job Creatiion Requeest with Re-try:-**:
+- 🧠 **Sample Job Creatiion Request with Re-try:-**:
 
 curl -X POST http://localhost:8080/api/jobs \
 -H "Content-Type: application/json" \
