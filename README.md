@@ -1,3 +1,8 @@
+![Java](https://img.shields.io/badge/java-11+-blue)
+![License](https://img.shields.io/github/license/binary-bablu/elastic-job-scheduler)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+
+
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
 An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintainable that executes shell scripts at scale — enabling Java, SQL, C/C++, and anything executable.
 
@@ -21,6 +26,18 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 - Airflow doesn't embrace shell
 
 Elastic Job Scheduler sits in between.
+
+## Who is this for?
+DevOps & SRE teams
+Infra engineers
+Teams with mixed workloads
+
+## What makes it different
+✅ Shell-first execution (Java, SQL, C/C++, Python, anything executable)
+✅ Distributed agents
+✅ Retry & dead-letter handling
+✅ Event-driven triggers (webhooks, messages, files) - not yet
+✅ API-driven (no UI required)
 
 ## 🏗️ Architecture Diagram
    <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
@@ -126,15 +143,13 @@ e) Similar to above multiple job-scheduler's can be run on different port's
 Engineer , Management Lead, Works for a bank - 
 "Managing minds and machines — all before the next release."
 
-Have questions or feedback? I'd love to hear from you!  
-📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
 
 ## 🚀 Underlying Tech
 Java, Spring/Spring Boot, RabbitMQ, PostgreSQL
 
-## 🚧 UI/UX Still not there...! 🎨
-
-## 💭 Feedback and Contributing
-   Not open yet
-
-## “If this project helped in any way, please consider giving it a ⭐ — it helps a lot.”
+## Project status
+🚧 Actively developed
+🚀 Early-stage but production-oriented
+💬 Feedback welcome
+📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
+If this project helps you, please consider giving it a ⭐
