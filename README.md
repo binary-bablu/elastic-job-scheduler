@@ -1,14 +1,26 @@
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
-An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintainable.
+An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintainable that executes shell scripts at scale — enabling Java, SQL, C/C++, and anything executable.
 
 ## ℹ️ Overview
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
 ## 🌟 Highlights
 - Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
-- Follows separation of concerns architectural pattern, SOA, queue based
 - Can be hosted on Cloud , on-prem, scales horizontally
 - Better alternative for large clunky open source , cost heavy commercial ones
 - API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
+- Shell script(driven) is a medium to execute anything e.g:- Java , SQL, C/C++ binaries, Rust , Go programs, Api calls 
+
+## Why not cron?
+- cron doesn't scale
+- cron has no retry semantics
+- cron has no observability
+
+## Why not Airflow?
+- Airflow is heavy
+- Airflow assumes Python
+- Airflow doesn't embrace shell
+
+Elastic Job Scheduler sits in between.
 
 ## 🏗️ Architecture Diagram
    <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
@@ -125,3 +137,4 @@ Java, Spring/Spring Boot, RabbitMQ, PostgreSQL
 ## 💭 Feedback and Contributing
    Not open yet
 
+## “If this project helped in any way, please consider giving it a ⭐ — it helps a lot.”
