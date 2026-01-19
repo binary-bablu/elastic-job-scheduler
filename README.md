@@ -1,14 +1,43 @@
+![Java](https://img.shields.io/badge/java-11+-blue)
+![License](https://img.shields.io/github/license/binary-bablu/elastic-job-scheduler)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+
+
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
-An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintainable.
+An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++, and anything executable.
 
 ## ℹ️ Overview
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
 ## 🌟 Highlights
 - Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
-- Follows separation of concerns architectural pattern, SOA, queue based
 - Can be hosted on Cloud , on-prem, scales horizontally
 - Better alternative for large clunky open source , cost heavy commercial ones
 - API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
+- Shell script(driven) is a medium to execute anything e.g:- Java , SQL, C/C++ binaries, Rust , Go programs, Api calls 
+
+## Why not cron?
+- cron doesn't scale
+- cron has no retry semantics
+- cron has no observability
+
+## Why not Airflow?
+- Airflow is heavy
+- Airflow assumes Python
+- Airflow doesn't embrace shell
+
+Elastic Job Scheduler sits in between.
+
+## Who is this for?
+Engineering ,DevOps & SRE teams
+Infra engineers
+Teams with mixed workloads
+
+## What makes it different
+✅ Shell-first execution (Java, SQL, C/C++, Python, anything executable)
+✅ Distributed agents
+✅ Retry & dead-letter handling
+🚧 (under construction) Event-driven triggers (webhooks, messages, files)
+✅ API-driven (no UI required)
 
 ## 🏗️ Architecture Diagram
    <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
@@ -72,7 +101,8 @@ d) Run Quartz table.sql script from Quartz github for postgresql (upto you if yo
 a) Have the repo git cloned or forked for your need(s)  
 b) Import the repo in your favourite editor (typically Eclipse or IntelliJ)  
 c) Run the job-manager module  
-Sample Job Creation Request :-  
+
+- 🧠 **Simple Sample Job Creatiion Request :-**:
 
 curl -X POST http://localhost:8080/api/jobs \
 -H "Content-Type: application/json" \
@@ -83,24 +113,43 @@ curl -X POST http://localhost:8080/api/jobs \
     "scriptPath": "/Users/mylaptop/test.sh",
     "parameters": {"database": "prod"}
 }'  
+
+- 🧠 **Sample Job Creatiion Request with Re-try:-**:
+
+curl -X POST http://localhost:8080/api/jobs \
+-H "Content-Type: application/json" \
+-d '{
+    "jobName": "daily-backup-1",
+    "jobGroup": "maintenance", 
+    "cronExpression": "0/30 * * * * ?",
+    "scriptPath": "/Users/test_laptop/test1.sh",
+    "parameters": {"database": "prod"},
+    "description" :"Daily backup job",
+	 "retryConfig": {
+        "maxAttempts": 2,
+        "backOffStrategy": "FIXED",
+        "initialDelayMs": 30000,
+        "nonRetryableExitCodes": [2, 126, 130, 143]
+    }
+}'
+
 d) Agent could be run from command line like below :-  
 *mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Dexecutor.agent.id=123"*    
 
 Multiple such agents can be run with different agent id's  
 e) Similar to above multiple job-scheduler's can be run on different port's
 
-### ✍️ Authors
-Engineer , Management Lead, Works for a bank - 
-"Managing minds and machines — all before the next release."
-
-Have questions or feedback? I'd love to hear from you!  
-📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
 
 ## 🚀 Underlying Tech
 Java, Spring/Spring Boot, RabbitMQ, PostgreSQL
 
-## 🚧 UI/UX Still not there...! 🎨
+### ✍️ Author
+Engineer , Management Lead, Works for a bank - 
+"Managing minds and machines — all before the next release."
 
-## 💭 Feedback and Contributing
-   Not open yet
-
+## Project status
+🚧 Actively developed
+🚀 Early-stage but production-oriented
+💬 Feedback welcome
+📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
+If this project helps you, please consider giving it a ⭐
