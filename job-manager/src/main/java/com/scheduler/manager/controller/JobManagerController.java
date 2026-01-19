@@ -167,4 +167,12 @@ public class JobManagerController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+    
+    @GetMapping("/all_jobs_dashboard_data")
+    public ResponseEntity<?> getAllJobs() {
+    	
+    	jobSchedulerService.getAllJobsDashBoardData();
+        return ResponseEntity.ok(Map.of("message", "Job triggered successfully"));
+    }
+    
 }

@@ -18,6 +18,8 @@ public class JobRequest {
     
     private Integer timeout;//seconds
     
+    private String ownerEmail;
+    
     // Per-job retry configuration
     private RetryConfig retryConfig;
     
@@ -81,5 +83,13 @@ public class JobRequest {
 
 	public void setTimeout(Integer timeout) {
 		this.timeout = timeout;
+	}
+
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
 	}
 }

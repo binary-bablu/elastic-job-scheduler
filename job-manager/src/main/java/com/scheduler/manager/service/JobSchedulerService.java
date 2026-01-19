@@ -3,6 +3,7 @@ package com.scheduler.manager.service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.scheduler.helios.job.QueuedShellScriptJob;
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
+import com.scheduler.manager.dto.JobsDashBoardDto;
 import com.scheduler.manager.entity.JobScheduleDefinition;
 import com.scheduler.manager.exception.JobAlreadyExistsException;
 import com.scheduler.manager.exception.JobNotFoundException;
@@ -71,6 +73,7 @@ public class JobSchedulerService {
         }
         jobInfo.setDescription(jobRequest.getDescription());
         jobInfo.setNonRetryableExitCodes(jobRequest.getRetryConfig().getNonRetryableExitCodes());
+        jobInfo.setOwnerEmail(jobRequest.getOwnerEmail());
         
         jobInfo = jobInfoRepository.save(jobInfo);
         
@@ -113,6 +116,7 @@ public class JobSchedulerService {
             jobInfo.addParameter(entry.getKey(), entry.getValue());
         }
         jobInfo.setNonRetryableExitCodes(jobRequest.getRetryConfig().getNonRetryableExitCodes());
+        jobInfo.setOwnerEmail(jobRequest.getOwnerEmail());
         
         jobInfo = jobInfoRepository.save(jobInfo);
         scheduleQuartzJob(jobInfo);
@@ -181,6 +185,7 @@ public class JobSchedulerService {
         jobInfo = jobInfoRepository.save(jobInfo);
         
         scheduleQuartzJob(jobInfo);
+        
         JobResponse response  = convertToResponse(jobInfo);
         logger.info("Job Activated in database and scheduler : "+ response);
     }
@@ -229,6 +234,7 @@ public class JobSchedulerService {
             scheduler.resumeJob(jobKey);
             jobInfo.setStatus("ACTIVE");
             jobInfoRepository.save(jobInfo);
+            
             logger.info("Job Resumed in database and scheduler : "+ jobId);
         }
     }
@@ -293,7 +299,7 @@ public class JobSchedulerService {
         	 logger.error(" Error in persisting job info "+exp.getMessage());
         }
     }
-
+    
     private JobResponse convertToResponse(JobScheduleDefinition jobInfo) throws SchedulerException {
     	
         JobResponse response = new JobResponse();
@@ -320,5 +326,32 @@ public class JobSchedulerService {
             response.setStatus("NOT_SCHEDULED");
         }
         return response;
+    }
+    
+    public List<JobsDashBoardDto> getAllJobsDashBoardData() {
+    	
+    	List<JobScheduleDefinition> jobsDashBoardEntityList = jobInfoRepository.findAll();
+    	return convertEntityToDto(jobsDashBoardEntityList);
+    }
+    
+    private List<JobsDashBoardDto> convertEntityToDto(List<JobScheduleDefinition> jobsDashBoardEntityList) {
+    	
+    	List<JobsDashBoardDto> jobsInfoList = new ArrayList<JobsDashBoardDto>();
+    	
+    	for(JobScheduleDefinition entity : jobsDashBoardEntityList) {
+    		JobsDashBoardDto jobsDashBoardDto = new JobsDashBoardDto();
+    		jobsDashBoardDto.setErrorCount(entity.getErrorCount());
+    		jobsDashBoardDto.setSuccessCount(entity.getSuccessCount());
+    		jobsDashBoardDto.setId(entity.getId());
+    		jobsDashBoardDto.setJobDescription(entity.getDescription());
+    		jobsDashBoardDto.setJobId(entity.getId());
+    		jobsDashBoardDto.setOwnerEmail(entity.getOwnerEmail());
+    		jobsDashBoardDto.setSchedule(entity.getCronExpression());
+    		jobsDashBoardDto.setStatus(entity.getStatus());
+    	}
+    	
+    	logger.info("Request received for retrieving jobs dashboard data");
+    	
+    	return jobsInfoList;
     }
 }
