@@ -1,5 +1,6 @@
-package com.scheduler.manager.entity;
+package com.scheduler.executor.entity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,10 +83,10 @@ public class JobScheduleDefinition {
 	private Integer errorCount;
 	
 	@Column(name="last_success_date")
-	private LocalDateTime lastSuccessDt;
+	private Timestamp lastSuccessDt;
 	
 	@Column(name="last_error_date")
-	private LocalDateTime lastErrorDt;
+	private Timestamp lastErrorDt;
    
     // Add/remove helpers
     public void addParameter(String key, String value) {
@@ -257,19 +258,19 @@ public class JobScheduleDefinition {
 		this.errorCount = errorCount;
 	}
 
-	public LocalDateTime getLastSuccessDt() {
+	public Timestamp getLastSuccessDt() {
 		return lastSuccessDt;
 	}
 
-	public void setLastSuccessDt(LocalDateTime lastSuccessDt) {
-		this.lastSuccessDt = lastSuccessDt;
+	public void setLastSuccessDt(Timestamp timestamp) {
+		this.lastSuccessDt = timestamp;
 	}
 
-	public LocalDateTime getLastErrorDt() {
+	public Timestamp getLastErrorDt() {
 		return lastErrorDt;
 	}
 
-	public void setLastErrorDt(LocalDateTime lastErrorDt) {
+	public void setLastErrorDt(Timestamp lastErrorDt) {
 		this.lastErrorDt = lastErrorDt;
 	}
 	
