@@ -143,7 +143,7 @@ e) Similar to above multiple job-scheduler's can be run on different port's
 ## 🚀 Underlying Tech
 Java, Spring/Spring Boot, RabbitMQ, PostgreSQL
 
-### ✍️ Authors
+### ✍️ Author
 Engineer , Management Lead, Works for a bank - 
 "Managing minds and machines — all before the next release."
 
