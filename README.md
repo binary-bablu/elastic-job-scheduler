@@ -102,7 +102,7 @@ a) Have the repo git cloned or forked for your need(s)
 b) Import the repo in your favourite editor (typically Eclipse or IntelliJ)  
 c) Run the job-manager module  
 
-- 🧠 **Simple Sample Job Creatiion Request :-**:
+- 🧠 **Simple Sample Job Creation Request (success and no re-tries):-**:
 
 curl -X POST http://localhost:8080/api/jobs \
 -H "Content-Type: application/json" \
@@ -111,10 +111,11 @@ curl -X POST http://localhost:8080/api/jobs \
     "jobGroup": "maintenance", 
     "cronExpression": "0/30 * * * * ?",
     "scriptPath": "/Users/mylaptop/test.sh",
+    "ownerEmail": "aa@bb.com", 
     "parameters": {"database": "prod"}
 }'  
 
-- 🧠 **Sample Job Creatiion Request with Re-try:-**:
+- 🧠 **Sample Job Creation Request with Re-try:-**:
 
 curl -X POST http://localhost:8080/api/jobs \
 -H "Content-Type: application/json" \
@@ -124,6 +125,7 @@ curl -X POST http://localhost:8080/api/jobs \
     "cronExpression": "0/30 * * * * ?",
     "scriptPath": "/Users/test_laptop/test1.sh",
     "parameters": {"database": "prod"},
+    "ownerEmail": "aa@bb.com", 
     "description" :"Daily backup job",
 	 "retryConfig": {
         "maxAttempts": 2,
