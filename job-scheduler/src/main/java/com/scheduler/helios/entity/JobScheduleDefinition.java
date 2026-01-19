@@ -59,7 +59,7 @@ public class JobScheduleDefinition {
 
     @OneToMany(mappedBy = "jobScheduleDefinition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobParameter> parameters = new ArrayList<>();
-
+    
     // Add/remove helpers
     public void addParameter(String key, String value) {
         JobParameter param = new JobParameter();
@@ -79,6 +79,21 @@ public class JobScheduleDefinition {
 	
 	@Column(name="retry_multiplier")
     private Integer retryMultiplier;
+	
+	@Column(name="owner_email")
+    private String ownerEmail;
+    
+    @Column(name="success_count")
+	private Integer successCount;
+	
+	@Column(name="error_count")
+	private Integer errorCount;
+	
+	@Column(name="last_success_date")
+	private LocalDateTime lastSuccessDt;
+	
+	@Column(name="last_error_date")
+	private LocalDateTime lastErrorDt;
 
 	public Integer getId() {
 		return id;
@@ -209,4 +224,45 @@ public class JobScheduleDefinition {
 	public void setNonRetryableExitCodes(List<Integer> nonRetryableExitCodes) {
 		this.nonRetryableExitCodes = nonRetryableExitCodes;
 	}
+	
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
+	}
+
+	public Integer getSuccessCount() {
+		return successCount;
+	}
+
+	public void setSuccessCount(Integer successCount) {
+		this.successCount = successCount;
+	}
+
+	public Integer getErrorCount() {
+		return errorCount;
+	}
+
+	public void setErrorCount(Integer errorCount) {
+		this.errorCount = errorCount;
+	}
+
+	public LocalDateTime getLastSuccessDt() {
+		return lastSuccessDt;
+	}
+
+	public void setLastSuccessDt(LocalDateTime lastSuccessDt) {
+		this.lastSuccessDt = lastSuccessDt;
+	}
+
+	public LocalDateTime getLastErrorDt() {
+		return lastErrorDt;
+	}
+
+	public void setLastErrorDt(LocalDateTime lastErrorDt) {
+		this.lastErrorDt = lastErrorDt;
+	}
+
 }

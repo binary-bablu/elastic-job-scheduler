@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS public.job_schedule_definitions
     retry_multiplier integer,
     timeout integer,
     non_retryable_exit_codes character varying(100) COLLATE pg_catalog."default",
+    owner_email character varying COLLATE pg_catalog."default",
+    success_count integer,
+    error_count integer,
+    last_success_date timestamp with time zone,
+    last_error_date timestamp with time zone,
     CONSTRAINT job_info_pkey PRIMARY KEY (id)
 )
 
