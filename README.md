@@ -36,7 +36,7 @@ Teams with mixed workloads
 ✅ Shell-first execution (Java, SQL, C/C++, Python, anything executable)
 ✅ Distributed agents
 ✅ Retry & dead-letter handling
-✅ Event-driven triggers (webhooks, messages, files) - not yet
+🚧 (under construction) Event-driven triggers (webhooks, messages, files)
 ✅ API-driven (no UI required)
 
 ## 🏗️ Architecture Diagram
