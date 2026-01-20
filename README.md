@@ -4,7 +4,7 @@
 
 
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
-An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++, and anything executable.
+An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++ and anything executable.
 
 ## ℹ️ Overview
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
@@ -36,8 +36,8 @@ Teams with mixed workloads
 ✅ Shell-first execution (Java, SQL, C/C++, Python, anything executable)
 ✅ Distributed agents
 ✅ Retry & dead-letter handling
-🚧 (under construction) Event-driven triggers (webhooks, messages, files)
-✅ API-driven (no UI required)
+🚧 (under construction) Event-driven triggers (messages, files), UI
+✅ API-driven - for now.
 
 ## 🏗️ Architecture Diagram
    <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
@@ -154,4 +154,4 @@ Engineer , Management Lead, Works for a bank -
 🚀 Early-stage but production-oriented
 💬 Feedback welcome
 📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
-If this project helps you, please consider giving it a ⭐
+- If this project helps you, please consider giving it a ⭐
