@@ -55,6 +55,11 @@ public class JobExecutionService {
 		dto.setRetryAttemptNumber(jobExecution.getRetryAttemptNumber());
 		dto.setStatus(jobExecution.getStatus());
 		dto.setExecutionId(jobExecution.getExecutionId());
+		dto.setQueuedEndTime(jobExecution.getQueuedEndTime().toString());
+		dto.setQueuedStartTime(jobExecution.getQueuedStartTime().toString());
+		dto.setErrorMessage(jobExecution.getErrorMessage());
+		dto.setOutputMessage(jobExecution.getOutputMessage());
+		
 		return dto;
 	}
 }
