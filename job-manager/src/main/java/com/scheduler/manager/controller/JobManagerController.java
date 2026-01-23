@@ -1,5 +1,6 @@
 package com.scheduler.manager.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.quartz.SchedulerException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.scheduler.manager.dto.JobRequest;
 import com.scheduler.manager.dto.JobResponse;
+import com.scheduler.manager.dto.JobsDashBoardDto;
 import com.scheduler.manager.exception.JobAlreadyExistsException;
 import com.scheduler.manager.exception.JobNotFoundException;
 import com.scheduler.manager.service.JobSchedulerService;
@@ -27,7 +29,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/jobs")
 @CrossOrigin(origins = "*")
-
 public class JobManagerController {
 	
 	@Autowired
@@ -171,8 +172,8 @@ public class JobManagerController {
     @GetMapping("/all_jobs_dashboard_data")
     public ResponseEntity<?> getAllJobs() {
     	
-    	jobSchedulerService.getAllJobsDashBoardData();
-        return ResponseEntity.ok(Map.of("message", "Job triggered successfully"));
+    	List<JobsDashBoardDto> jobsDashBoardList = jobSchedulerService.getAllJobsDashBoardData();
+        return ResponseEntity.ok(jobsDashBoardList);
     }
     
 }

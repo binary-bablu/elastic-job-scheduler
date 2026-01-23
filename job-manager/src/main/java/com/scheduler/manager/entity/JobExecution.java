@@ -44,7 +44,7 @@ public class JobExecution {
     @Column(name="retry_attempt_number")
     private int retryAttemptNumber;
     
-    @Column(name="is_retry_attemp")
+    @Column(name="is_retry_attempt")
     private String isRetryAttempt;//values YES Or NO
     
     @Column(name="output_message")

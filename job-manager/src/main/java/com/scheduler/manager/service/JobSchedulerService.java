@@ -331,6 +331,8 @@ public class JobSchedulerService {
     public List<JobsDashBoardDto> getAllJobsDashBoardData() {
     	
     	List<JobScheduleDefinition> jobsDashBoardEntityList = jobInfoRepository.findAll();
+    	logger.info("Request received for retrieving jobs dashboard data");
+    	
     	return convertEntityToDto(jobsDashBoardEntityList);
     }
     
@@ -348,10 +350,8 @@ public class JobSchedulerService {
     		jobsDashBoardDto.setOwnerEmail(entity.getOwnerEmail());
     		jobsDashBoardDto.setSchedule(entity.getCronExpression());
     		jobsDashBoardDto.setStatus(entity.getStatus());
+    		jobsInfoList.add(jobsDashBoardDto);
     	}
-    	
-    	logger.info("Request received for retrieving jobs dashboard data");
-    	
     	return jobsInfoList;
     }
 }
