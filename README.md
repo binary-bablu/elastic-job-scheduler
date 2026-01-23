@@ -1,4 +1,4 @@
-![Java](https://img.shields.io/badge/java-11+-blue)
+![Java](https://img.shields.io/badge/java-17+-blue)
 ![License](https://img.shields.io/github/license/binary-bablu/elastic-job-scheduler)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 
