@@ -4,7 +4,7 @@
 
 
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
-An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++ and anything executable.
+An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++, api's and anything executable.
 
 ## ℹ️ Overview
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
@@ -12,8 +12,9 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 - Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
 - Can be hosted on Cloud , on-prem, scales horizontally
 - Better alternative for large clunky open source , cost heavy commercial ones
-- API centric , extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
-- Shell script(driven) is a medium to execute anything e.g:- Java , SQL, C/C++ binaries, Rust , Go programs, Api calls 
+- API centric, extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
+- Shell script(driven) is a medium to execute anything e.g:- Java , SQL, C/C++ binaries, Rust , Go programs, Api calls.
+- Job Execution agents run on destination infra and execute jobs over there rather than scheduler infra, there by decoupling it.
 
 ## Why not cron?
 - cron doesn't scale
@@ -33,7 +34,7 @@ Infra engineers
 Teams with mixed workloads
 
 ## What makes it different
-✅ Shell-first execution (Java, SQL, C/C++, Python, anything executable)
+✅ Shell-first execution (Java, SQL, C/C++, Python, Api's - anything executable)
 ✅ Distributed agents
 ✅ Retry & dead-letter handling
 🚧 (under construction) Event-driven triggers (messages, files), UI
