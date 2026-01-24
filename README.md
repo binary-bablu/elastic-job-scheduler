@@ -58,7 +58,7 @@ Teams with mixed workloads
 ### 3. 🧩 **Executor Agent** (Port 8081+)
 - Consumes job execution requests from queue
 - Execute shell scripts with parameters
-- Publish results back to scheduler
+- Publishes results back to scheduler
 - Can run on different machines and Auto-scaling friendly
 ### 4. 🧩 **Message Queue** (RabbitMQ)
 - **Execution Queue**: Job requests from scheduler to agents
