@@ -12,26 +12,25 @@ Watch this repository to receive notifications about updates, releases and break
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
 
 ## 🌟 Highlights
-🌍 Distributed & Scalable — scales horizontally with additional agents and schedulers.
-🛠 Technology-agnostic Job Execution — execute anything executable (Java, SQL, C/C++, Python, external APIs, scripts) via shell-driven jobs.
-🤝 Decoupled Executors — job execution runs on separate agents, keeping scheduler resources free and allowing flexible deployment anywhere.
-📡 API-centric Control — job management via REST APIs for automation and integration.
-🐇 Simple & Maintainable — based on familiar tech (Spring Boot, Quartz) with a lighter codebase for customization.
-📦 Cloud + On-prem Ready — deploy on Kubernetes, cloud VMs, or internal infrastructure without heavy external dependencies.
-💡 Retry & Dead-Letter Handling — built-in fault tolerance for job failures with retry queues and dead-letter queues.
+- 🌍 Distributed & Scalable — scales horizontally with additional agents and schedulers.
+- 🛠 Technology‑agnostic Job Execution — execute anything executable (Java, SQL, Python, external APIs, scripts) via shell-driven jobs.
+- 🤝 Decoupled Executors — job execution runs on separate agents, keeping scheduler resources free and allowing flexible deployment anywhere.
+- 📡 API‑centric Control — job management via REST APIs for automation and integration.
+- 🐇 Simple & Maintainable — based on familiar tech (Spring Boot, Quartz) with a lighter codebase for customization.
+- 📦 Cloud + On‑prem Ready — deploy on Kubernetes, cloud VMs, or internal infrastructure without heavy external dependencies.
+- 💡 Retry & Dead‑Letter Handling — built-in fault tolerance for job failures with retry queues and dead-letter queues.
 
-## 🔑 Key Features — What it actually does
-Key Features are specific capabilities and functional elements you can highlight in docs and demos.
-🧩 Core Scheduler
+## 🔑 Key Features 
+- 🧩 Core Scheduler
 Quartz-based scheduler that manages job triggers and scheduling cycles.
 Supports cron expressions and time-based job schedules.
-🏎 Job Execution Agents
+- 🏎 Job Execution Agents
 Dedicated agent service to execute jobs remotely on any machine you deploy.
 Agents handle job execution output and report back status to scheduler.
-🛠 Job Management
+- 🛠 Job Management
 RESTful API for job creation, deletion, and configuration.
 Job metadata stored in PostgreSQL, with Quartz tables for schedule state.
-🔁 Fault Tolerance & Reliability
+- 🔁 Fault Tolerance & Reliability
 Retry queue — failed jobs are retried automatically.
 Dead letter queue (DLQ) — permanently failed jobs are flagged for inspection.
 Agents and scheduler can fail and restart without losing job definitions.
