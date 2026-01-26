@@ -6,6 +6,9 @@
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
 An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++, api's and anything executable.
 
+🔔 **Stay updated**  
+I recommend watching this repository to receive notifications about updates, releases and breaking changes.
+
 ## ℹ️ Overview
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
 ## 🌟 Highlights
@@ -15,18 +18,7 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 - API centric, extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
 - Shell script(driven) is a medium to execute anything e.g:- Java , SQL, C/C++ binaries, Rust , Go programs, Api calls.
 - Job Execution agents run on destination infra and execute jobs over there rather than scheduler infra, there by decoupling it.
-
-## Why not cron?
-- cron doesn't scale
-- cron has no retry semantics
-- cron has no observability
-
-## Why not Airflow?
-- Airflow is heavy
-- Airflow assumes Python
-- Airflow doesn't embrace shell
-
-Elastic Job Scheduler sits in between.
+- No expensive h/w required, control with job owner
 
 ## Who is this for?
 Engineering ,DevOps & SRE teams
@@ -37,8 +29,8 @@ Teams with mixed workloads
 ✅ Shell-first execution (Java, SQL, C/C++, Python, Api's - anything executable)
 ✅ Distributed agents
 ✅ Retry & dead-letter handling
-🚧 (under construction) Event-driven triggers (messages, files), UI
 ✅ API-driven - for now.
+✅ Simple Code base for extension, customization, not tied to specific tech
 
 ## 🏗️ Architecture Diagram
    <img width="648" height="724" alt="job-sched" src="https://github.com/user-attachments/assets/90ba811a-3eed-4a03-8d50-2f392c206587" />
@@ -146,13 +138,20 @@ e) Similar to above multiple job-scheduler's can be run on different port's
 ## 🚀 Underlying Tech
 Java, Spring/Spring Boot, RabbitMQ, PostgreSQL
 
+## 🚧 Under Construction
+- Job Dependency
+- Alerting Configuration and alerts
+- Job Triggers besides schedule in an Event based mechanism via Queue
+- Export of Job Execution results, Job Configuration Data
+
 ### ✍️ Author
 Engineer , Management Lead, Works for a bank - 
 "Managing minds and machines — all before the next release."
 
 ## Project status
-🚧 Actively developed
+🔥 Actively developed
 🚀 Early-stage but production-oriented
 💬 Feedback welcome
 📧 **Email me at:** [darkavenger57@yahoo.co.in](mailto:darkavenger57@yahoo.co.in)
 - If this project helps you, please consider giving it a ⭐
+
