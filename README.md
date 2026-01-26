@@ -2,23 +2,39 @@
 ![License](https://img.shields.io/github/license/binary-bablu/elastic-job-scheduler)
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 
-
 # 📦 elastic-job-scheduler ⏱️ ⏳ 📅 🧠 🐙
-An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to exceute jobs at scale — enabling Java, SQL, C/C++, api's and anything executable.
+An Elastic , Fault tolerant ,Scalable job scheduler which is easy to use and maintain. Uses shell script as a medium to execute jobs at scale — enabling Java, SQL, C/C++, api's and anything executable.
 
 🔔 **Stay updated**  
-I recommend watching this repository to receive notifications about updates, releases and breaking changes.
+Watch this repository to receive notifications about updates, releases and breaking changes.
 
 ## ℹ️ Overview
 A light weight Job scheduler which can scale horizontally,robust,can be deployed on-prem/cloud, api centric ,easy to maintain and enhance, based on open and open source tech like Spring/Spring Boot, Quartz and Java.No requirement for large scale infrastructure elements. 
+
 ## 🌟 Highlights
-- Light weight ,Fault Tolerant ,Scalable, Easy to Maintain/Enhance, Extensible for Enterprise grade features
-- Can be hosted on Cloud , on-prem, scales horizontally
-- Better alternative for large clunky open source , cost heavy commercial ones
-- API centric, extensible for any required functionality like monitoring, alerting, email, easy to setup and get it up and running
-- Shell script(driven) is a medium to execute anything e.g:- Java , SQL, C/C++ binaries, Rust , Go programs, Api calls.
-- Job Execution agents run on destination infra and execute jobs over there rather than scheduler infra, there by decoupling it.
-- No expensive h/w required, control with job owner
+🌍 Distributed & Scalable — scales horizontally with additional agents and schedulers.
+🛠 Technology-agnostic Job Execution — execute anything executable (Java, SQL, C/C++, Python, external APIs, scripts) via shell-driven jobs.
+🤝 Decoupled Executors — job execution runs on separate agents, keeping scheduler resources free and allowing flexible deployment anywhere.
+📡 API-centric Control — job management via REST APIs for automation and integration.
+🐇 Simple & Maintainable — based on familiar tech (Spring Boot, Quartz) with a lighter codebase for customization.
+📦 Cloud + On-prem Ready — deploy on Kubernetes, cloud VMs, or internal infrastructure without heavy external dependencies.
+💡 Retry & Dead-Letter Handling — built-in fault tolerance for job failures with retry queues and dead-letter queues.
+
+## 🔑 Key Features — What it actually does
+Key Features are specific capabilities and functional elements you can highlight in docs and demos.
+🧩 Core Scheduler
+Quartz-based scheduler that manages job triggers and scheduling cycles.
+Supports cron expressions and time-based job schedules.
+🏎 Job Execution Agents
+Dedicated agent service to execute jobs remotely on any machine you deploy.
+Agents handle job execution output and report back status to scheduler.
+🛠 Job Management
+RESTful API for job creation, deletion, and configuration.
+Job metadata stored in PostgreSQL, with Quartz tables for schedule state.
+🔁 Fault Tolerance & Reliability
+Retry queue — failed jobs are retried automatically.
+Dead letter queue (DLQ) — permanently failed jobs are flagged for inspection.
+Agents and scheduler can fail and restart without losing job definitions.
 
 ## Who is this for?
 Engineering ,DevOps & SRE teams
@@ -43,20 +59,24 @@ Teams with mixed workloads
 - Manages job definitions and schedules (CRUD operations for Job Defs and schedules)
 - REST styled API's
 - Monitoring (to be developed/in-progress)
+
 ### 2. 🧩 **Job Scheduler** (Port 8082)
 - Handles Quartz based triggers.
 - Publishes job execution requests to queue when triggered
 - Processes execution results from agents
+
 ### 3. 🧩 **Executor Agent** (Port 8081+)
 - Consumes job execution requests from queue
 - Execute shell scripts with parameters
 - Publishes results back to scheduler
 - Can run on different machines and Auto-scaling friendly
+
 ### 4. 🧩 **Message Queue** (RabbitMQ)
 - **Execution Queue**: Job requests from scheduler to agents
 - **Result Queue**: Execution results from agents to scheduler
 - **Retry Queue**: Failed jobs for retry with delay
 - **DLQ**: Dead letter queue for permanently failed jobs
+
 ### 5. 🧩 **Storage**
 - **PostgreSQL**: Quartz job metadata , Job definitions, Job Execution Information with agent heartbeats
 
@@ -81,18 +101,16 @@ Teams with mixed workloads
 - Scheduler and agents are stateless (except job definitions)
 - Built-in retry mechanisms with exponential backoff
 
-### ✅ **Monitoring & Observability**
-- 💡More to come, ideas are brewing ☕ stay tuned ..  
-
 ## 📋 Prerequisites for running  
 a) Have a PostgreSQL Database Instance configured  
 b) Have a RabbitMQ installation done  
 c) Note :- The current yaml files assume local installation of PostgreSQL database and RabbitMQ (with default creds and setup)  
 d) Run Quartz table.sql script from Quartz github for postgresql (upto you if you want different schema or in your app schema)
+e) Requires Linux/Mac OS
 
 ## 🏃 How to Run
 a) Have the repo git cloned or forked for your need(s)  
-b) Import the repo in your favourite editor (typically Eclipse or IntelliJ)  
+b) Import the repo in your favorite editor (typically Eclipse or IntelliJ)  
 c) Run the job-manager module  
 
 - 🧠 **Simple Sample Job Creation Request (success and no re-tries):-**:
@@ -143,6 +161,7 @@ Java, Spring/Spring Boot, RabbitMQ, PostgreSQL
 - Alerting Configuration and alerts
 - Job Triggers besides schedule in an Event based mechanism via Queue
 - Export of Job Execution results, Job Configuration Data
+- Observability
 
 ### ✍️ Author
 Engineer , Management Lead, Works for a bank - 
