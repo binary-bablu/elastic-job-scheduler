@@ -121,4 +121,5 @@ public class JobExecutionDetailsDto {
 	public void setExecutionId(Integer executionId) {
 		this.executionId = executionId;
 	}
+	
 }

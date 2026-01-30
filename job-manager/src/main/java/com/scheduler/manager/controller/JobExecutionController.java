@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scheduler.manager.dto.JobExecutionDetailsDto;
@@ -22,16 +23,16 @@ public class JobExecutionController {
 	private JobExecutionService jobExecutionService;
 	
 	@GetMapping("/{jobId}/executions")
-    public ResponseEntity<?> listExecutionsByJob(@PathVariable Integer jobId) {
+    public ResponseEntity<?> listExecutionsByJob(@PathVariable Integer jobId,@RequestParam String timezone) {
     	
-		List<JobExecutionListDto> jobExecutionList = jobExecutionService.listJobExecutions(jobId);
+		List<JobExecutionListDto> jobExecutionList = jobExecutionService.listJobExecutions(jobId,timezone);
         return ResponseEntity.ok(jobExecutionList);
     }
 
 	@GetMapping("/{jobId}/executions/{executionId}")
-    public ResponseEntity<?> getExecutionById(@PathVariable Integer jobId,@PathVariable Integer executionId) {
+    public ResponseEntity<?> getExecutionById(@PathVariable Integer jobId,@PathVariable Integer executionId,@RequestParam String timezone) {
     	
-		JobExecutionDetailsDto jobExecutionDetail = jobExecutionService.getExecutionDetails(jobId,executionId);
+		JobExecutionDetailsDto jobExecutionDetail = jobExecutionService.getExecutionDetails(jobId,executionId,timezone);
         return ResponseEntity.ok(jobExecutionDetail);
     }
 }

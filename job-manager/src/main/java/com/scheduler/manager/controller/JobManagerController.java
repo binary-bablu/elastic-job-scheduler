@@ -1,5 +1,7 @@
 package com.scheduler.manager.controller;
 
+import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -176,4 +178,29 @@ public class JobManagerController {
         return ResponseEntity.ok(jobsDashBoardList);
     }
     
+    @GetMapping("/timezones")
+    public ResponseEntity<?> getSupportedTimezones() {
+        List<String> commonTimezones = Arrays.asList(
+            "UTC",
+            "America/New_York",
+            "America/Chicago",
+            "America/Denver",
+            "America/Los_Angeles",
+            "Europe/London",
+            "Europe/Paris",
+            "Europe/Berlin",
+            "Asia/Tokyo",
+            "Asia/Shanghai",
+            "Asia/Kolkata",
+            "Asia/Dubai",
+            "Australia/Sydney",
+            "Pacific/Auckland"
+        );
+        
+        return ResponseEntity.ok(Map.of(
+            "commonTimezones", commonTimezones,
+            "allTimezones", ZoneId.getAvailableZoneIds()
+        ));
+    }
+      
 }

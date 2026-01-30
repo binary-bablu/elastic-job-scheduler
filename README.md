@@ -19,11 +19,13 @@ A light weight Job scheduler which can scale horizontally,robust,can be deployed
 - 🐇 Simple & Maintainable — based on familiar tech (Spring Boot, Quartz) with a lighter codebase for customization.
 - 📦 Cloud + On‑prem Ready — deploy on Kubernetes, cloud VMs, or internal infrastructure without heavy external dependencies.
 - 💡 Retry & Dead‑Letter Handling — built-in fault tolerance for job failures with retry queues and dead-letter queues.
+- 🌍 ⏰ 📅 Schedule job for a given Time zone and time
 
 ## 🔑 Key Features 
 - 🧩 Core Scheduler
 Quartz-based scheduler that manages job triggers and scheduling cycles.
 Supports cron expressions and time-based job schedules.
+Invoke Jobs at for specified Time-zone
 - 🏎 Job Execution Agents
 Dedicated agent service to execute jobs remotely on any machine you deploy.
 Agents handle job execution output and report back status to scheduler.
@@ -111,6 +113,8 @@ e) Requires Linux/Mac OS
 a) Have the repo git cloned or forked for your need(s)  
 b) Import the repo in your favorite editor (typically Eclipse or IntelliJ)  
 c) Run the job-manager module  
+d) 🚨 In job-manager -> resources -> application.yaml change the initialize-schema: always to never  
+   For experimentation purpose its kept as always 
 
 - 🧠 **Simple Sample Job Creation Request (success and no re-tries):-**:
 

@@ -1,9 +1,10 @@
 package com.scheduler.manager.service;
 
-import java.time.Instant;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
@@ -35,6 +36,7 @@ import com.scheduler.manager.entity.JobScheduleDefinition;
 import com.scheduler.manager.exception.JobAlreadyExistsException;
 import com.scheduler.manager.exception.JobNotFoundException;
 import com.scheduler.manager.repository.JobInfoRepository;
+import com.scheduler.utils.TimestampConverter;
 
 @Service
 public class JobSchedulerService {
@@ -74,6 +76,10 @@ public class JobSchedulerService {
         jobInfo.setDescription(jobRequest.getDescription());
         jobInfo.setNonRetryableExitCodes(jobRequest.getRetryConfig().getNonRetryableExitCodes());
         jobInfo.setOwnerEmail(jobRequest.getOwnerEmail());
+        
+        validateTimezone(jobRequest.getTimezone());
+        
+        jobInfo.setTimezone(jobRequest.getTimezone());
         
         jobInfo = jobInfoRepository.save(jobInfo);
         
@@ -117,6 +123,10 @@ public class JobSchedulerService {
         }
         jobInfo.setNonRetryableExitCodes(jobRequest.getRetryConfig().getNonRetryableExitCodes());
         jobInfo.setOwnerEmail(jobRequest.getOwnerEmail());
+        
+        validateTimezone(jobRequest.getTimezone());
+        
+        jobInfo.setTimezone(jobRequest.getTimezone());
         
         jobInfo = jobInfoRepository.save(jobInfo);
         scheduleQuartzJob(jobInfo);
@@ -270,6 +280,7 @@ public class JobSchedulerService {
                  .withIdentity(jobInfo.getJobName(), jobInfo.getJobGroup())
                  .withDescription(jobInfo.getDescription())
                  .setJobData(jobDataMap)
+                 .usingJobData("timezone", jobInfo.getTimezone())
                  .storeDurably(true)
                  .build();
                  
@@ -277,22 +288,17 @@ public class JobSchedulerService {
         		    .withIdentity(jobInfo.getJobName() + "_trigger", jobInfo.getJobGroup())
         		    .withSchedule(
         		        CronScheduleBuilder.cronSchedule(jobInfo.getCronExpression())
-        		            .inTimeZone(TimeZone.getDefault())  // Use system default time zone
+        		            .inTimeZone(TimeZone.getTimeZone(jobInfo.getZoneId()))  //Use provided time zone
         		    )
         		    .build();        
          try {
         	 scheduler.scheduleJob(jobDetail, trigger);
              jobInfo.setCronExpression(trigger.getCronExpression());
              
-             // Print initial fire time
-             Date nextFireTime = trigger.getNextFireTime();
-             System.out.println("Next Fire Time (raw): " + nextFireTime);
-             System.out.println("Next Fire Time (local): " +
-                     Instant.ofEpochMilli(nextFireTime.getTime())
-                             .atZone(ZoneId.systemDefault()));
-
+             logger.info("Next Fire Times : " + getNextFireTimes(jobInfo.getJobName(), jobInfo.getJobGroup(), 2));
              
-             logger.info("Scheduled job: {}.{}", jobInfo.getJobGroup(), jobInfo.getJobName());
+             logger.info("Job Scheduled successfully job: {}.{} with Cron: {} in timezone {}", jobInfo.getJobGroup(), 
+            		 jobInfo.getJobName(),jobInfo.getCronExpression(),jobInfo.getTimezone());
         	 
          }catch(Exception exp) {
         	 exp.printStackTrace(); 
@@ -350,8 +356,52 @@ public class JobSchedulerService {
     		jobsDashBoardDto.setOwnerEmail(entity.getOwnerEmail());
     		jobsDashBoardDto.setSchedule(entity.getCronExpression());
     		jobsDashBoardDto.setStatus(entity.getStatus());
+    	    jobsDashBoardDto.setTimezone(entity.getTimezone());
+    	    jobsDashBoardDto.setLastErrorDt(TimestampConverter.formatLocalDateTime( entity.getLastErrorDt(),entity.getTimezone()));
+    	    jobsDashBoardDto.setLastSuccessDt(TimestampConverter.formatLocalDateTime(  entity.getLastSuccessDt(),entity.getTimezone()));
     		jobsInfoList.add(jobsDashBoardDto);
     	}
     	return jobsInfoList;
     }
+    
+    /**
+     * Validate timezone string
+     */
+    private void validateTimezone(String timezone) {
+        try {
+            ZoneId.of(timezone);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(
+                "Invalid timezone: " + timezone + ". Use IANA timezone IDs like 'America/New_York' or 'UTC'");
+        }
+    }
+    
+    /**
+     * Get next fire times for a job in its configured timezone
+     */
+    public List<String> getNextFireTimes(String jobName, String jobGroup, int count) 
+            throws SchedulerException {
+        
+        TriggerKey triggerKey = TriggerKey.triggerKey(jobName + "-trigger", jobGroup);
+        CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+        
+        if (trigger == null) {
+            return Collections.emptyList();
+        }
+        
+        List<String> fireTimes = new ArrayList<>();
+        Date nextFireTime = trigger.getNextFireTime();
+        
+        TimeZone tz = trigger.getTimeZone();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+        sdf.setTimeZone(tz);
+        
+        for (int i = 0; i < count && nextFireTime != null; i++) {
+            fireTimes.add(sdf.format(nextFireTime));
+            nextFireTime = trigger.getFireTimeAfter(nextFireTime);
+        }
+        
+        return fireTimes;
+    }
+    
 }

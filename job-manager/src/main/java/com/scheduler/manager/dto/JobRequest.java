@@ -2,6 +2,8 @@ package com.scheduler.manager.dto;
 
 import java.util.Map;
 
+import jakarta.validation.constraints.Pattern;
+
 public class JobRequest {
 	
     private String jobName;
@@ -22,6 +24,12 @@ public class JobRequest {
     
     // Per-job retry configuration
     private RetryConfig retryConfig;
+    
+    @Pattern(
+            regexp = "^(UTC|GMT|[A-Za-z]+/[A-Za-z_]+)$",
+            message = "Invalid timezone format. Use IANA timezone IDs like 'America/New_York', 'Asia/Kolkata', or 'UTC'"
+    )
+    private String timezone = "UTC"; // Default to UTC
     
     // Constructors
     public JobRequest() {}
@@ -91,5 +99,13 @@ public class JobRequest {
 
 	public void setOwnerEmail(String ownerEmail) {
 		this.ownerEmail = ownerEmail;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 }

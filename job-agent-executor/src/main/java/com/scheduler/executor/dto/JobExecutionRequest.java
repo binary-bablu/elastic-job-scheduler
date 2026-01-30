@@ -15,7 +15,6 @@ public class JobExecutionRequest {
     private String jobGroup;
     private String scriptPath;
     private Map<String, String> parameters;
-    private LocalDateTime scheduledTime;
     private Integer executionId; // Unique execution ID
     private int timeoutSeconds = 300;//default 5 mins
     private LocalDateTime queuedTime;
@@ -30,6 +29,7 @@ public class JobExecutionRequest {
 	
 	private LocalDateTime startTime;
 	private List<Integer> nonRetryableExitCodes = List.of(2, 126,-998,-999);//default if nothing is provided
+	private String timezone;    
     
     public JobExecutionRequest() {}
     
@@ -91,12 +91,6 @@ public class JobExecutionRequest {
 	}
 	public void setParameters(Map<String, String> parameters) {
 		this.parameters = parameters;
-	}
-	public LocalDateTime getScheduledTime() {
-		return scheduledTime;
-	}
-	public void setScheduledTime(LocalDateTime scheduledTime) {
-		this.scheduledTime = scheduledTime;
 	}
 	
 	public Integer getExecutionId() {
@@ -234,6 +228,14 @@ public class JobExecutionRequest {
 
 	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
+	}
+	
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 }
 

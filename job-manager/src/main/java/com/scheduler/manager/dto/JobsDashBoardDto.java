@@ -23,6 +23,8 @@ public class JobsDashBoardDto {
 	private String lastErrorDt;
 	
 	private String status;
+	
+	private String timezone;
 
 	public Integer getJobId() {
 		return jobId;
@@ -110,6 +112,14 @@ public class JobsDashBoardDto {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 	
 }

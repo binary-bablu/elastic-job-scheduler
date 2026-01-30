@@ -1,6 +1,7 @@
 package com.scheduler.helios.entity;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "job_schedule_definitions")
@@ -94,6 +96,9 @@ public class JobScheduleDefinition {
 	
 	@Column(name="last_error_date")
 	private LocalDateTime lastErrorDt;
+	
+	@Column(name="timezone")
+    private String timezone = "UTC";
 
 	public Integer getId() {
 		return id;
@@ -264,5 +269,16 @@ public class JobScheduleDefinition {
 	public void setLastErrorDt(LocalDateTime lastErrorDt) {
 		this.lastErrorDt = lastErrorDt;
 	}
+	
+	// Transient field to work with ZoneId
+    @Transient
+    public ZoneId getZoneId() {
+        return ZoneId.of(timezone);
+    }
+    
+    @Transient
+    public void setZoneId(ZoneId zoneId) {
+        this.timezone = zoneId.getId();
+    }
 
 }

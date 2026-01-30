@@ -53,7 +53,8 @@ private static final Logger logger = LoggerFactory.getLogger(JobExecutorService.
             environment.put("JOB_ID", String.valueOf(request.getJobId()));
             environment.put("EXECUTION_ID", String.valueOf(request.getExecutionId()));
             environment.put("AGENT_ID", String.valueOf(agentId));
-            
+            environment.put("JOB_TIMEZONE", request.getTimezone());
+           
             // Start process
             Process process = processBuilder.start();
             

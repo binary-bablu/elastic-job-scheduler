@@ -2,6 +2,9 @@ package com.scheduler.helios.job;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -73,6 +76,16 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
     private JobExecutionRequest createJobExecReq(JobExecutionContext context,JobScheduleDefinition jobInfo ) {
     	
     	JobDataMap dataMap = context.getJobDetail().getJobDataMap();
+    	// Get Date objects from Quartz
+       
+    	String timezone = dataMap.getString("timezone");
+    	ZoneId zoneId = ZoneId.of(timezone);
+        ZonedDateTime executionTime = ZonedDateTime.now(zoneId);
+        
+        logger.info("Executing job: {} at {} ({})", 
+                context.getJobDetail().getKey().getName(),
+                executionTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME),
+                timezone);
     	
     	JobExecutionRequest request = new JobExecutionRequest();
         request.setJobId((Integer) dataMap.get("jobId"));
@@ -86,7 +99,7 @@ private static final Logger logger = LoggerFactory.getLogger(QueuedShellScriptJo
         request.setQueuedTime(LocalDateTime.now());
         request.setTimeoutSeconds(jobInfo.getTimeout());
         request.setNonRetryableExitCodes(jobInfo.getNonRetryableExitCodes());
-        
+        request.setTimezone(timezone);
         // Extract parameters
         Map<String, String> parameters = new HashMap<>();
         for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
