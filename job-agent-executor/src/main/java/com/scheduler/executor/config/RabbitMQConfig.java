@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +14,13 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMQConfig {
 	
+	 @Value("${agent.execution-queue-name}")
+	 private String executionQueueName;
+	 
+	 @Value("${agent.job-execution-routing-key}")
+	 private String exceutionQueueRoutingKey;
+	
 	// Queue Names
-    public static final String JOB_EXECUTION_QUEUE = "job.execution.queue";
     public static final String JOB_RESULT_QUEUE = "job.result.queue";
     public static final String JOB_RETRY_QUEUE = "job.retry.queue";
     public static final String JOB_DLQ = "job.dlq";  // Dead Letter Queue
@@ -25,7 +31,6 @@ public class RabbitMQConfig {
     public static final String JOB_DLQ_EXCHANGE = "job.dlq.exchange";
     
     // Routing Keys
-    public static final String JOB_EXECUTION_ROUTING_KEY = "job.execute";
     public static final String JOB_RESULT_ROUTING_KEY = "job.result";
     public static final String JOB_RETRY_ROUTING_KEY = "job.retry";
     public static final String JOB_DLQ_ROUTING_KEY = "job.dlq";
@@ -74,7 +79,7 @@ public class RabbitMQConfig {
     // Job execution queue
     @Bean
     public Queue jobExecutionQueue() {
-        return QueueBuilder.durable(JOB_EXECUTION_QUEUE)
+        return QueueBuilder.durable(executionQueueName)
                 .withArgument("x-dead-letter-exchange", JOB_RETRY_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", JOB_RETRY_ROUTING_KEY)
                 .build();
@@ -92,7 +97,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(JOB_RETRY_QUEUE)
                 .withArgument("x-message-ttl", 60000) // 1 minute delay
                 .withArgument("x-dead-letter-exchange", JOB_EXCHANGE)
-                .withArgument("x-dead-letter-routing-key", JOB_EXECUTION_ROUTING_KEY)
+                .withArgument("x-dead-letter-routing-key", exceutionQueueRoutingKey)
                 .build();
     }
     
@@ -107,7 +112,7 @@ public class RabbitMQConfig {
     public Binding jobExecutionBinding() {
         return BindingBuilder.bind(jobExecutionQueue())
                 .to(jobExchange())
-                .with(JOB_EXECUTION_ROUTING_KEY);
+                .with(exceutionQueueRoutingKey);
     }
     
     @Bean

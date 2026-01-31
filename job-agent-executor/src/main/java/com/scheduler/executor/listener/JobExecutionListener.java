@@ -8,14 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import com.rabbitmq.client.Channel;
-import com.scheduler.executor.config.RabbitMQConfig;
 import com.scheduler.executor.dto.JobExecutionRequest;
 import com.scheduler.executor.dto.JobExecutionResult;
-import com.scheduler.executor.service.AgentHealthService;
 import com.scheduler.executor.service.JobExecutorService;
 import com.scheduler.executor.service.JobExecutorStatusService;
 import com.scheduler.executor.service.JobResultPublisher;
@@ -25,6 +24,9 @@ import com.scheduler.executor.service.JobRetryService;
 public class JobExecutionListener {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JobExecutionListener.class);
+	
+	@Value("${executor.agent.id}")
+	private String agentId;
 	    
 	@Autowired
 	private JobExecutorService jobExecutorService;
@@ -33,15 +35,12 @@ public class JobExecutionListener {
 	private JobResultPublisher jobResultPublisher;
 	
 	@Autowired
-	private AgentHealthService agentHealthService;
-	
-	@Autowired
     private JobExecutorStatusService jobExecutorStatusService;
 	
 	@Autowired
     private JobRetryService jobRetryService;
 	
-	@RabbitListener(queues = RabbitMQConfig.JOB_EXECUTION_QUEUE, concurrency = "#{@agentHealthService.maxConcurrentJobs}")
+	@RabbitListener(queues = "${agent.execution-queue-name}")
 	public void handleJobExecution(JobExecutionRequest request, Channel channel,
 	                             @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
 		
@@ -62,15 +61,6 @@ public class JobExecutionListener {
             		request.getBackOffStrategy(),
             		request.calculateDelay(request.getCurrentRetryCount()));
         }
-	    
-	    // Check if agent can accept more jobs
-	    if (!agentHealthService.canAcceptMoreJobs()) {
-	        logger.warn("Agent at capacity, rejecting job execution id : {}", request.getExecutionId());
-	        // Message will be re-queued automatically
-	        throw new RuntimeException("Agent at full capacity !");
-	    }
-	    
-	    agentHealthService.incrementActiveJobs();
 	    
 	    logger.info("Processing job: {} with execution id {} on agent with delivery tag: {}", 
 	    		request.getJobId(),request.getExecutionId(), deliveryTag);
@@ -100,8 +90,8 @@ public class JobExecutionListener {
 	        result = createFailureResult(request, e);
 	        
 	    } finally {
-	        agentHealthService.decrementActiveJobs();
-	        jobExecutorStatusService.updateJobExecutionEntry(result);
+
+	    	jobExecutorStatusService.updateJobExecutionEntry(result);
 	        
 	        // Publish result back to scheduler
 	        jobResultPublisher.publishResult(result);
@@ -117,7 +107,7 @@ public class JobExecutionListener {
 	    JobExecutionResult result = new JobExecutionResult(
 	        request.getExecutionId(), 
 	        request.getJobId(), 
-	        agentHealthService.getAgentId()
+	        agentId
 	    );
 	    result.setSuccess(false);
 	    result.setErrorMessage(e.getMessage());

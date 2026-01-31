@@ -1,6 +1,10 @@
 server:
   port: 8081
 
+agent:
+  execution-queue-name: job.execution.queue
+  job-execution-routing-key: job.execute
+
 spring:
   application:
     name: job-executor-service
